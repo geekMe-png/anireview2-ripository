@@ -14,23 +14,24 @@
         <!-- Scripts -->
         @vite(['resources/css/app.css', 'resources/js/app.js'])
     </head>
-    <body class="font-sans antialiased">
-        <div class="min-h-screen bg-gray-100">
+    <body class="bg-stone-800">
+        <nav>
             @include('layouts.navigation')
+        </nav>
 
-            <!-- Page Heading -->
-            @if (isset($header))
-                <header class="bg-white shadow">
-                    <div class="max-w-7xl mx-auto py-6 px-4 sm:px-6 lg:px-8">
-                        {{ $header }}
-                    </div>
-                </header>
-            @endif
-
-            <!-- Page Content -->
-            <main>
-                {{ $slot }}
-            </main>
-        </div>
+        <header>
+            <!-- 共通のヘッダー内容はここに記述 -->
+            @include('layouts.header')
+        </header>
+    
+        <main>
+            <!-- メインコンテンツはここに表示されます -->
+            @yield('content')
+        </main>
+    
+        <footer>
+            <!-- 共通のフッター内容はここに記述 -->
+            @include('layouts.footer')
+        </footer>
     </body>
 </html>

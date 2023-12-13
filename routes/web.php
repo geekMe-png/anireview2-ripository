@@ -22,9 +22,13 @@ Route::get('/movie', function () {
     return view('movie');
 });
 
-Route::get('/dashboard', function () {
-    return view('dashboard');
-})->middleware(['auth', 'verified'])->name('dashboard');
+Route::get('/review', function () {
+    return view('review');
+});
+
+Route::get('/mypage', function () {
+    return view('mypage');
+})->middleware(['auth', 'verified'])->name('mypage');
 
 Route::middleware('auth')->group(function () {
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');

@@ -17,6 +17,7 @@
         </style>
     </head>
     <body class="bg-stone-800">
-        <img src="asset{{ ../public/assets/images/メイドさん.png }}" alt="映せません">
+        <img src="{{ asset('assets/images/メイドさん.png') }}" alt="映せません">
+        <p>こちらは<span class="text-red-600">作品ページ</span>です</p>
     </body>
 </html>
