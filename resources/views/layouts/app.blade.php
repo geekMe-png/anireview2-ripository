@@ -13,13 +13,14 @@
 
         <!-- Scripts -->
         @vite(['resources/css/app.css', 'resources/js/app.js'])
+        <script src="{{ asset('/assets/js/script.js') }}" defer></script>
     </head>
     <body class="bg-stone-800">
         <nav>
             @include('layouts.navigation')
         </nav>
 
-        <header>
+        <header class="my-10">
             <!-- 共通のヘッダー内容はここに記述 -->
             @include('layouts.header')
         </header>

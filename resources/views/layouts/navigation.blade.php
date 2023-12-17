@@ -5,6 +5,8 @@
         <x-application-menu-button class="flex">
         </x-application-menu-button>
     </div>
-    <x-application-menu-list class="text-2xl text-stone-800 bg-stone-500">
-    </x-application-menu-list>
+    <div class="hidden md:block" id="menu-list">
+        <x-application-menu-list class="text-2xl text-stone-800 bg-stone-500">
+        </x-application-menu-list>
+    </div>
 </nav>
