@@ -12,6 +12,10 @@ export default {
 
     theme: {
         extend: {
+            backgroundImage: theme => ({
+                'book-img': "url('../../public/assets/images/背景本.png')",
+               }),
+
             fontFamily: {
                 sans: ['Figtree', ...defaultTheme.fontFamily.sans],
             },
