@@ -25,23 +25,18 @@
         <nav>
             @include('layouts.navigation')
         </nav>
-
-        <header class="my-10">
-            <!-- 共通のヘッダー内容はここに記述 -->
-            @include('layouts.header')
-        </header>
     
         <main>
             <!-- メインコンテンツはここに表示されます -->
             @yield('content')
         </main>
-
+    
         <footer>
             <!-- 共通のフッター内容はここに記述 -->
             @include('layouts.footer')
         </footer>
 
-        <script type="module">
+        <script>
             const swiper = new Swiper('.mySwiperClass', {
                 loop: true,
                 slidesPerView: 3,
