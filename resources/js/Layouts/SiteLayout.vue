@@ -1,9 +1,14 @@
-<script setup></script>
+<script setup>
+import { Head, Link } from '@inertiajs/vue3';
+import NavigationLayout from './NavigationLayout.vue';
+import HeaderLayout from './HeaderLayout.vue';
+</script>
 
 <template>
-    <header>
-        <p>ヘッダーです</p>
-    </header>
+    <nav>
+        <NavigationLayout/>
+    </nav>
+
 
     <main>
         <slot />

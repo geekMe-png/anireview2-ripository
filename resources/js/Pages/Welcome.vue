@@ -1,6 +1,9 @@
 <script setup>
 import { Head, Link } from '@inertiajs/vue3';
 import SiteLayout from "../Layouts/SiteLayout.vue";
+import SearchForm from '@/Components/SearchForm.vue';
+import HeaderLayout from '@/Layouts/HeaderLayout.vue';
+import { Container } from 'postcss';
 
 defineProps({
     canLogin: {
@@ -24,15 +27,21 @@ defineProps({
 <template>
     <Head title="Welcome" />
 
-    <SiteLayout>
-        <section>
-            <p>コンテンツです</p>
-        </section>
+    <v-container class="relative">
+        <SiteLayout>
+                <HeaderLayout class="mt-10">
+                    <p>こちらは<span class="text-red-600">トップページ</span>です</p>
+                </HeaderLayout>
 
-        <div id="app">
-            <p>{{ name }}</p>
-        </div>
-    </SiteLayout>
+                <form action="#" class="absolute right-96">
+                    <SearchForm class=""/>
+                </form>
+
+                <section>
+                    <p>コンテンツです</p>
+                </section>
+        </SiteLayout>
+    </v-container>
 </template>
 
 <style>
