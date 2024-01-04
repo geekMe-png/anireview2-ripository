@@ -3,7 +3,6 @@ import { Head, Link } from '@inertiajs/vue3';
 import SiteLayout from "../Layouts/SiteLayout.vue";
 import SearchForm from '@/Components/SearchForm.vue';
 import HeaderLayout from '@/Layouts/HeaderLayout.vue';
-import { Container } from 'postcss';
 
 defineProps({
     canLogin: {
@@ -24,6 +23,21 @@ defineProps({
 });
 </script>
 
+<script>
+import 'vue3-carousel/dist/carousel.css'
+import { Carousel, Slide, Pagination, Navigation } from 'vue3-carousel'
+
+export default {
+  name: 'App',
+  components: {
+    Carousel,
+    Slide,
+    Pagination,
+    Navigation,
+  },
+}
+</script>
+
 <template>
     <Head title="Welcome" />
 
@@ -33,12 +47,21 @@ defineProps({
                     <p>こちらは<span class="text-red-600">トップページ</span>です</p>
                 </HeaderLayout>
 
-                <form action="#" class="absolute right-96">
+                <form action="#" class="md:absolute md:right-96">
                     <SearchForm class=""/>
                 </form>
 
                 <section>
-                    <p>コンテンツです</p>
+                    <carousel :items-to-show="3" :items-to-scroll="3" autoplay="6000" :pauseAutoplayOnHover="true" wrapAround>
+                        <slide v-for="slide in 12" :key="slide">
+                            {{ slide }}
+                        </slide>
+
+                        <template #addons>
+                            <navigation />
+                            <pagination />
+                        </template>
+                    </carousel>
                 </section>
         </SiteLayout>
     </v-container>
