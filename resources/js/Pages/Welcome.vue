@@ -24,8 +24,21 @@ defineProps({
 </script>
 
 <script>
-import 'vue3-carousel/dist/carousel.css'
-import { Carousel, Slide, Pagination, Navigation } from 'vue3-carousel'
+import 'vue3-carousel/dist/carousel.css';
+import { Carousel, Slide, Pagination, Navigation } from 'vue3-carousel';
+
+const slides = [
+  'ダンジョン飯.webp',
+  'メタリックルージュ.jpg',
+  'ゆびさきと恋々.avif',
+  '異修羅.avif',
+  '道産子ギャル.avif',
+  '魔法少女になりたくて.jpg',
+  'バーンザウィッチ.jpg',
+  '異世界モフモフ.avif',
+  '戦国妖狐.avif',
+  '姫様拷問の時間です.avif',
+]
 
 export default {
   name: 'App',
@@ -35,7 +48,7 @@ export default {
     Pagination,
     Navigation,
   },
-}
+};
 </script>
 
 <template>
@@ -51,17 +64,17 @@ export default {
                     <SearchForm class=""/>
                 </form>
 
-                <section>
-                    <carousel :items-to-show="3" :items-to-scroll="3" autoplay="6000" :pauseAutoplayOnHover="true" wrapAround>
-                        <slide v-for="slide in 12" :key="slide">
-                            {{ slide }}
-                        </slide>
+                <section class="mt-28">
+                  <carousel :items-to-show="5" items-to-scroll="5" autoplay="9000" wrap-around="false">
+                    <slide v-for="slide in slides" :key="slide">
+                      <img :src="'assets/images/'+ slide " alt="映せません" class="w-44">
+                    </slide>
 
-                        <template #addons>
-                            <navigation />
-                            <pagination />
-                        </template>
-                    </carousel>
+                    <template #addons="{ slidesCount }">
+                      <navigation />
+                      <pagination />
+                    </template>
+                  </carousel>
                 </section>
         </SiteLayout>
     </v-container>
