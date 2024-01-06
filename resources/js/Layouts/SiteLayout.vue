@@ -6,7 +6,7 @@ import HeaderLayout from './HeaderLayout.vue';
 
 <template>
     <nav>
-        <NavigationLayout/>
+        <NavigationLayout class=""/>
     </nav>
 
 

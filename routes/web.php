@@ -26,6 +26,16 @@ Route::get('/', function () {
     ]);
 });
 
+Route::get('/review/edit', function () {
+    return Inertia::render('backend/review_edit', [
+        'canLogin' => Route::has('login'),
+        'canRegister' => Route::has('register'),
+        'laravelVersion' => Application::VERSION,
+        'phpVersion' => PHP_VERSION,
+        'name'=> '御坂美琴',
+    ]);
+});
+
 // memberとしての認証、および、機能のルーティング
 require __DIR__ . '/member.php';
 

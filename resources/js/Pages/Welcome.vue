@@ -56,26 +56,34 @@ export default {
 
     <v-container class="relative">
         <SiteLayout>
-                <HeaderLayout class="mt-10">
-                    <p>こちらは<span class="text-red-600">トップページ</span>です</p>
+          <div class="py-20 bg-black">
+            <HeaderLayout class="">
+                    <p class="text-white">こちらは<span class="text-red-600">トップページ</span>です</p>
                 </HeaderLayout>
 
                 <form action="#" class="md:absolute md:right-96">
                     <SearchForm class=""/>
                 </form>
+          </div>
+          <section class="py-11 bg-stone-500">
+            <h1 class="text-4xl text-center mb-10">今期のアニメ</h1>
+            <carousel :items-to-show="5" items-to-scroll="5" autoplay="9000" wrap-around="false">
+              <slide v-for="slide in slides" :key="slide">
+                <a href="#">
+                  <img :src="'assets/images/'+ slide " alt="映せません" class="w-44">
+                </a>
+              </slide>
 
-                <section class="mt-28">
-                  <carousel :items-to-show="5" items-to-scroll="5" autoplay="9000" wrap-around="false">
-                    <slide v-for="slide in slides" :key="slide">
-                      <img :src="'assets/images/'+ slide " alt="映せません" class="w-44">
-                    </slide>
+              <template #addons="{ slidesCount }">
+                <navigation />
+                <pagination />
+              </template>
+            </carousel>
+          </section>
 
-                    <template #addons="{ slidesCount }">
-                      <navigation />
-                      <pagination />
-                    </template>
-                  </carousel>
-                </section>
+          <div>
+            <h1 class="text-4xl text-center my-10">レビュー一覧</h1>
+          </div>
         </SiteLayout>
     </v-container>
 </template>
