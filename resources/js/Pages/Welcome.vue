@@ -65,7 +65,7 @@ export default {
                     <SearchForm class=""/>
                 </form>
           </div>
-          <section class="py-11 bg-stone-500">
+          <section class="py-8 bg-stone-500">
             <h1 class="text-4xl text-center mb-10">今期のアニメ</h1>
             <carousel :items-to-show="5" items-to-scroll="5" autoplay="9000" wrap-around="false">
               <slide v-for="slide in slides" :key="slide">
