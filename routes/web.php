@@ -32,7 +32,15 @@ Route::get('/review/edit', function () {
         'canRegister' => Route::has('register'),
         'laravelVersion' => Application::VERSION,
         'phpVersion' => PHP_VERSION,
-        'name'=> '御坂美琴',
+    ]);
+});
+
+Route::get('/movie/edit', function () {
+    return Inertia::render('backend/movie_edit', [
+        'canLogin' => Route::has('login'),
+        'canRegister' => Route::has('register'),
+        'laravelVersion' => Application::VERSION,
+        'phpVersion' => PHP_VERSION,
     ]);
 });
 
