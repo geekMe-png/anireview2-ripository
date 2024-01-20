@@ -2,16 +2,35 @@
 
 namespace App\Http\Controllers;
 
+use Inertia\Inertia;
+use Illuminate\Foundation\Application;
+use Illuminate\Support\Facades\Route;
 use Illuminate\Http\Request;
 use App\Models\Movie;
 use App\Models\Year;
 
 class MovieController extends Controller
 {
-    public function create() {
-        $years = Year::all();
+    public function index($movie_id) {
+        $movies = Movie::where('id', $movie_id)->get();
 
-        return view('/backend/movie_edit', compact('years'));
+        return Inertia::render('Movie', [
+            'canLogin' => Route::has('login'),
+            'canRegister' => Route::has('register'),
+            'laravelVersion' => Application::VERSION,
+            'phpVersion' => PHP_VERSION,
+            'movies' => $movies,
+        ]);
+    }
+
+    public function create() {
+        return Inertia::render('backend/movie_edit', [
+            'canLogin' => Route::has('login'),
+            'canRegister' => Route::has('register'),
+            'laravelVersion' => Application::VERSION,
+            'phpVersion' => PHP_VERSION,
+            'years' => Year::all(),
+        ]);
     }
 
     public function store(Request $request) {
@@ -22,26 +41,28 @@ class MovieController extends Controller
         $movie = new Movie();
 
         // アップロードされたファイル名を取得
-        $filename = $request->file('input_movie_img')->getClientOriginalName();
+        $filename = $request->file('movie_img')->getClientOriginalName();
 
         //画像ファイルを保存するディレクトリはstorage/app/public/img/
-        $request->file('input_movie_img')->storeAs('image', $filename, 'public');
+        $request->file('movie_img')->storeAs('image', $filename, 'public');
+
 
         //データベースに追加
         //$image->実際に存在するテーブルの列名 = $file_name;
         //$image->実際に存在するテーブルの列名 = 'storage/app/public/' . $dir . '/' . $file_name;
         $post = Movie::create([
-            'movie_title' => $request->input_movie_title,
-            'about' => $request->input_movie_about,
-            'auther' => $request->input_auther,
-            'directer' => $request->input_directer,
-            'screenwriter' => $request->input_screenwriter,
-            'caracterdesign' => $request->input_CharacterDesign,
-            'music' => $request->input_music,
-            'company' => $request->input_company,
-            'year_id' => $request->input_year,
+            'movie_title' => $request->movie_title,
+            'about' => $request->movie_about,
+            'auther' => $request->auther,
+            'directer' => $request->directer,
+            'screenwriter' => $request->screenwriter,
+            'caracterdesign' => $request->characterdesign,
+            'music' => $request->music,
+            'cast' => $request->movie_cast,
+            'company' => $request->company,
+            'year_id' => $request->year_id,
             'movie_img' => $filename,
-            'movie_img_path' => 'storage/app/public' . $dir . '/' . $filename,
+            'movie_img_path' => 'storage/image' . '/' . $filename,
         ]);
 
         return back();

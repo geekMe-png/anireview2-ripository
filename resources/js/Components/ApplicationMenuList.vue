@@ -1,7 +1,11 @@
+<script setup>
+import { Head, Link } from '@inertiajs/vue3';
+</script>
+
 <template>
     <ul class="justify-center md:flex md:space-x-32">
-        <li class="border-b-2 border-stone-500 hover:border-b-2 hover:border-white hover:text-white py-4"><a href="{{ route('login') }}">ログイン</a></li>
-        <li class="border-b-2 border-stone-500 hover:border-b-2 hover:border-white hover:text-white py-4"><a href="{{ route('register') }}">新規会員登録</a></li>
-        <li class="border-b-2 border-stone-500 hover:border-b-2 hover:border-white hover:text-white py-4"><a href="{{ route('logout') }}">ログアウト</a></li>
+        <li class="border-b-2 border-stone-500 hover:border-b-2 hover:border-white py-4 flex-1 text-center"><Link :href="route('login')">ログイン</Link></li>
+        <li class="border-b-2 border-stone-500 hover:border-b-2 hover:border-white py-4 flex-1 text-center"><Link :href="route('register')">新規会員登録</Link></li>
+        <li class="border-b-2 border-stone-500 hover:border-b-2 hover:border-white py-4 flex-1 text-center"><Link :href="route('logout')" method="post">ログアウト</Link></li>
     </ul>
 </template>

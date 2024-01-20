@@ -15,7 +15,9 @@ createInertiaApp({
         return createApp({ render: () => h(App, props) })
             .use(plugin)
             .use(ZiggyVue, Ziggy)
+            .mixin({ methods: {route} })
             .mount(el);
+            app.config.globalProperties.route = route;
     },
     progress: {
         color: '#4B5563',

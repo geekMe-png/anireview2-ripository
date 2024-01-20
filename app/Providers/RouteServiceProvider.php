@@ -17,7 +17,7 @@ class RouteServiceProvider extends ServiceProvider
      *
      * @var string
      */
-    private const HOME = '/dashboard';
+    private const HOME = '/';
 
     public static function home() {
         $role = detect_role();

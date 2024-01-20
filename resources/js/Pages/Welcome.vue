@@ -19,7 +19,12 @@ defineProps({
         type: String,
         required: true,
     },
-    name:String,
+    user_name: {
+      type: String,
+    },
+    reviews: {
+      type: Array,
+    }
 });
 </script>
 
@@ -55,7 +60,7 @@ export default {
     <Head title="Welcome" />
 
     <v-container class="relative">
-        <SiteLayout>
+        <SiteLayout :user_name2=user_name>
           <div class="py-20 bg-black">
             <HeaderLayout class="">
                     <p class="text-white">こちらは<span class="text-red-600">トップページ</span>です</p>
@@ -83,6 +88,15 @@ export default {
 
           <div>
             <h1 class="text-4xl text-center my-10">レビュー一覧</h1>
+            <div id="review_items" v-for="review in reviews" class="my-10">
+              <p>{{ review.review_title }}</p>
+              <p>{{ review.movie.movie_title }} </p>
+              <p>{{ review.original.origin }}</p>
+              <p class="whitespace-pre-wrap">{{ review.review_content }}</p>
+              <p>{{ review.user.name }}</p>
+              <p>{{ review.created_at }}</p>
+              <p>{{ review.updated_at }}</p>
+            </div>
           </div>
         </SiteLayout>
     </v-container>

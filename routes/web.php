@@ -1,9 +1,12 @@
 <?php
 
 use App\Http\Controllers\ProfileController;
+use App\Http\Controllers\ReviewController;
 use Illuminate\Foundation\Application;
 use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
+use App\Http\Controllers\MovieController;
+use App\Http\Controllers\HomeController;
 
 /*
 |--------------------------------------------------------------------------
@@ -16,36 +19,26 @@ use Inertia\Inertia;
 |
 */
 
-Route::get('/', function () {
-    return Inertia::render('Welcome', [
-        'canLogin' => Route::has('login'),
-        'canRegister' => Route::has('register'),
-        'laravelVersion' => Application::VERSION,
-        'phpVersion' => PHP_VERSION,
-        'name'=> '御坂美琴',
-    ]);
+Route::get('/', [HomeController::class, 'index'])->name('welcome');
+
+Route::get('/review-edit/{movie_id}', [ReviewController::class, 'create'])->name('review.create');
+
+Route::post('/review-edit/{movie_id}', [ReviewController::class, 'store'])->name('review.store');
+
+Route::get('/movie/{movie_id}', [MovieController::class, 'index'])->name('movie.index');
+
+Route::get('/movie-edit', [MovieController::class, 'create'])->name('movie.create');
+
+Route::post('/movie-edit', [MovieController::class, 'store'])->name('movie.store');
+
+Route::get('/dashboard', function () {
+    return Inertia::render('Dashboard');
+})->middleware(['auth', 'verified'])->name('dashboard');
+
+Route::middleware('auth')->group(function () {
+    Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
+    Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
+    Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
 });
 
-Route::get('/review/edit', function () {
-    return Inertia::render('backend/review_edit', [
-        'canLogin' => Route::has('login'),
-        'canRegister' => Route::has('register'),
-        'laravelVersion' => Application::VERSION,
-        'phpVersion' => PHP_VERSION,
-    ]);
-});
-
-Route::get('/movie/edit', function () {
-    return Inertia::render('backend/movie_edit', [
-        'canLogin' => Route::has('login'),
-        'canRegister' => Route::has('register'),
-        'laravelVersion' => Application::VERSION,
-        'phpVersion' => PHP_VERSION,
-    ]);
-});
-
-// memberとしての認証、および、機能のルーティング
-require __DIR__ . '/member.php';
-
-// adminとしての認証、および、機能のルーティング
-require __DIR__ . '/admin.php';
+require __DIR__.'/auth.php';

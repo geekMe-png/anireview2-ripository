@@ -18,6 +18,7 @@ class Movie extends Model
         'screenwriter',
         'caracterdesign',
         'music',
+        'cast',
         'company',
         'year_id',
         'movie_img',
