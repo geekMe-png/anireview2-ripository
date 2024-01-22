@@ -92,6 +92,7 @@ export default {
               <p>{{ review.review_title }}</p>
               <p>{{ review.movie.movie_title }} </p>
               <p>{{ review.original.origin }}</p>
+              <p>{{ review.score }}</p>
               <p class="whitespace-pre-wrap">{{ review.review_content }}</p>
               <p>{{ review.user.name }}</p>
               <p>{{ review.created_at }}</p>

@@ -23,6 +23,12 @@ defineProps({
     movies: {
         type: Array,
     },
+    reviews: {
+        type: Array,
+    },
+    auth: {
+        type: Number,
+    },
 });
 </script>
 
@@ -57,7 +63,7 @@ export default {
                         <p class="text-5xl flex">{{ movie.movie_title }}</p>
                         <star-rating :rating="rating" increment="0.1" read-only class="text-3xl" />
                         <a href="#">レビューを書く</a>
-                        <a href="#">作品を編集</a>
+                        <a href="#" v-if="auth === 1">作品を編集</a>
                     </div>
                 </div>
                 <div class="mt-8">
@@ -79,10 +85,19 @@ export default {
                 </div>
                 <div class="mt-8">
                     <p>年代</p>
-                    <p>{{ movie.year_id }}</p>
+                    <p>{{ movie.year.year }}</p>
                 </div>
                 <div>
                     <p class="text-3xl text-center">レビュー一覧</p>
+                    <div v-for="review in reviews">
+                        <p>{{ review.review_title }}</p>
+                        <p>{{ review.original.origin }}</p>
+                        <p>{{ review.score }}</p>
+                        <p class="whitespace-pre-wrap">{{ review.review_content }}</p>
+                        <p>{{ review.user.name }}</p>
+                        <p>{{ review.created_at }}</p>
+                        <p>{{ review.updated_at }}</p>
+                    </div>
                 </div>
             </div>
         </SiteLayout>

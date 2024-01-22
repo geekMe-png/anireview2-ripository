@@ -6,10 +6,18 @@ import PrimaryButton from '@/Components/PrimaryButton.vue';
 import TextInput from '@/Components/TextInput.vue';
 import { Head, Link, useForm } from '@inertiajs/vue3';
 
+const props = defineProps({
+    genders: {
+        type: Array,
+    }
+});
+
 const form = useForm({
     name: '',
     email: '',
     password: '',
+    gender_id: '',
+    role_id: 2,
     password_confirmation: '',
 });
 
@@ -84,6 +92,16 @@ const submit = () => {
                 />
 
                 <InputError class="mt-2" :message="form.errors.password_confirmation" />
+            </div>
+
+            <div>
+                <select name="gender_id" id="gender_id" v-model="form.gender_id">
+                    <option :value="gender.id" v-for="gender in genders">{{ gender.gender }}</option>
+                </select>
+            </div>
+
+            <div>
+                <input type="hidden" v-model="form.role_id">
             </div>
 
             <div class="flex items-center justify-end mt-4">

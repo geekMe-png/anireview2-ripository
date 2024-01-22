@@ -6,13 +6,20 @@ use Inertia\Inertia;
 use Illuminate\Foundation\Application;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use App\Models\Movie;
 use App\Models\Year;
+use App\Models\Review;
 
 class MovieController extends Controller
 {
     public function index($movie_id) {
-        $movies = Movie::where('id', $movie_id)->get();
+        $movies = Movie::with('year')->where('id', $movie_id)->get();
+        $reviews = Review::with('original', 'user')->where('movie_id', $movie_id)->get();
+
+        if(auth()->id()) {
+            $auth = Auth::user()->role_id;
+        };
 
         return Inertia::render('Movie', [
             'canLogin' => Route::has('login'),
@@ -20,6 +27,8 @@ class MovieController extends Controller
             'laravelVersion' => Application::VERSION,
             'phpVersion' => PHP_VERSION,
             'movies' => $movies,
+            'reviews' => $reviews,
+            'auth' => $auth,
         ]);
     }
 

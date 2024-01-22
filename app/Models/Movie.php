@@ -28,4 +28,8 @@ class Movie extends Model
     public function year() {
         return $this->belongsTo(Year::class);
     }
+
+    public function review() {
+        return $this->hasMany(Review::class);
+    }
 }

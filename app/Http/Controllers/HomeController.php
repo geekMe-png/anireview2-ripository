@@ -14,21 +14,21 @@ use App\Models\Review;
 class HomeController extends Controller
 {
     public function index() {
-        if(auth()->id()) {
-            $users_name = Auth::user()->name;
-        }else{
-            $users_name = '';
-        }
-
         $reviews = Review::with('original', 'movie', 'user')->get();
+
+        if(auth()->id()) {
+            $user_name = Auth::user()->name;
+        }else{
+            $user_name = '';
+        }
 
         return Inertia::render('Welcome', [
             'canLogin' => Route::has('login'),
             'canRegister' => Route::has('register'),
             'laravelVersion' => Application::VERSION,
             'phpVersion' => PHP_VERSION,
-            'user_name' => $users_name,
             'reviews' => $reviews,
+            'user_name' => $user_name,
         ]);
     }
 }

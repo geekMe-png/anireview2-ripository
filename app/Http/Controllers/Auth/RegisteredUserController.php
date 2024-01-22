@@ -14,6 +14,7 @@ use Illuminate\Validation\Rules;
 use Illuminate\View\View;
 use Inertia\Inertia;
 use Inertia\Response;
+use App\Models\Gender;
 
 class RegisteredUserController extends Controller
 {
@@ -22,7 +23,11 @@ class RegisteredUserController extends Controller
      */
     public function create(): Response
     {
-        return Inertia::render('Auth/Register');
+        $genders = Gender::all();
+        
+        return Inertia::render('Auth/Register', [
+            'genders' => $genders,
+        ]);
     }
 
     /**
@@ -42,6 +47,8 @@ class RegisteredUserController extends Controller
             'name' => $request->name,
             'email' => $request->email,
             'password' => Hash::make($request->password),
+            'gender_id' => $request->gender_id,
+            'role_id' => $request->role_id,
         ]);
 
         event(new Registered($user));

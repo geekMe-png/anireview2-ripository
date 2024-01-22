@@ -7,6 +7,7 @@ use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
 use App\Http\Controllers\MovieController;
 use App\Http\Controllers\HomeController;
+use App\Http\Controllers\MypageController;
 
 /*
 |--------------------------------------------------------------------------
@@ -25,11 +26,13 @@ Route::get('/review-edit/{movie_id}', [ReviewController::class, 'create'])->name
 
 Route::post('/review-edit/{movie_id}', [ReviewController::class, 'store'])->name('review.store');
 
-Route::get('/movie/{movie_id}', [MovieController::class, 'index'])->name('movie.index');
+Route::get('/movie/{movie_id}', [MovieController::class, 'index'])->name('movie');
 
 Route::get('/movie-edit', [MovieController::class, 'create'])->name('movie.create');
 
 Route::post('/movie-edit', [MovieController::class, 'store'])->name('movie.store');
+
+Route::get('/mypage/{user_id}', [MypageController::class, 'index'])->name('mypage');
 
 Route::get('/dashboard', function () {
     return Inertia::render('Dashboard');
