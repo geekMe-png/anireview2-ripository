@@ -8,6 +8,7 @@ use Inertia\Inertia;
 use App\Http\Controllers\MovieController;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\MypageController;
+use App\Http\Controllers\SearchController;
 
 /*
 |--------------------------------------------------------------------------
@@ -33,6 +34,8 @@ Route::get('/movie-edit', [MovieController::class, 'create'])->name('movie.creat
 Route::post('/movie-edit', [MovieController::class, 'store'])->name('movie.store');
 
 Route::get('/mypage/{user_id}', [MypageController::class, 'index'])->name('mypage');
+
+Route::get('/search', [SearchController::class, 'index'])->name('search');
 
 Route::get('/dashboard', function () {
     return Inertia::render('Dashboard');

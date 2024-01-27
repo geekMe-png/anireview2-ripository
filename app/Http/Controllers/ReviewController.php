@@ -37,6 +37,7 @@ class ReviewController extends Controller
     }
 
     public function store(Request $request) {
+
         $post = Review::create([
             'original_id' => $request->original_id,
             'score' => $request->score,

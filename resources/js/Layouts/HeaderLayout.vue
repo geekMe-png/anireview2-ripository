@@ -12,9 +12,5 @@ import Character from '@/Components/Character.vue';
                 <slot />
             </p>
         </div>
-
-        <form action="" class="flex justify-center mt-12">
-            <x-searchForm />
-        </form>
     </div>
 </template>

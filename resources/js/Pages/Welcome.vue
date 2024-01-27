@@ -24,7 +24,7 @@ defineProps({
     },
     reviews: {
       type: Array,
-    }
+    },
 });
 </script>
 
