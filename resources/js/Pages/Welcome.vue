@@ -3,8 +3,11 @@ import { Head, Link } from '@inertiajs/vue3';
 import SiteLayout from "../Layouts/SiteLayout.vue";
 import SearchForm from '@/Components/SearchForm.vue';
 import HeaderLayout from '@/Layouts/HeaderLayout.vue';
+import 'vue3-carousel/dist/carousel.css';
+import { Carousel, Slide, Pagination, Navigation } from 'vue3-carousel';
+import { Inertia } from '@inertiajs/inertia';
 
-defineProps({
+const props = defineProps({
     canLogin: {
         type: Boolean,
     },
@@ -25,58 +28,41 @@ defineProps({
     reviews: {
       type: Array,
     },
+    img_path: {
+      type: String,
+    },
+    user_id: {
+      type: Number,
+    },
+    home_route: {
+      type: String,
+    },
+    user_route: {
+      type: String,
+    },
 });
-</script>
 
-<script>
-import 'vue3-carousel/dist/carousel.css';
-import { Carousel, Slide, Pagination, Navigation } from 'vue3-carousel';
+const slides = props.img_path;
 
-const slides = [
-  'ダンジョン飯.webp',
-  'メタリックルージュ.jpg',
-  'ゆびさきと恋々.avif',
-  '異修羅.avif',
-  '道産子ギャル.avif',
-  '魔法少女になりたくて.jpg',
-  'バーンザウィッチ.jpg',
-  '異世界モフモフ.avif',
-  '戦国妖狐.avif',
-  '姫様拷問の時間です.avif',
-]
-
-export default {
-  name: 'App',
-  components: {
-    Carousel,
-    Slide,
-    Pagination,
-    Navigation,
-  },
-};
 </script>
 
 <template>
     <Head title="Welcome" />
 
     <v-container class="relative">
-        <SiteLayout :user_name2=user_name>
+        <SiteLayout :user_name2=user_name :home_route="home_route" :user_route="user_route" >
           <div class="py-20 bg-black">
             <HeaderLayout class="">
                     <p class="text-white">こちらは<span class="text-red-600">トップページ</span>です</p>
                 </HeaderLayout>
-
-                <form action="#" class="md:absolute md:right-96">
-                    <SearchForm class=""/>
-                </form>
           </div>
           <section class="py-8 bg-stone-500">
             <h1 class="text-4xl text-center mb-10">今期のアニメ</h1>
             <carousel :items-to-show="5" items-to-scroll="5" autoplay="9000" wrap-around="false">
               <slide v-for="slide in slides" :key="slide">
-                <a href="#">
-                  <img :src="'assets/images/'+ slide " alt="映せません" class="w-44">
-                </a>
+                <Link :href="route('movie', { movie_id: slide.id })">
+                  <img :src="'../' + slide.movie_img_path" alt="映せません" class="w-44">
+                </Link>
               </slide>
 
               <template #addons="{ slidesCount }">
@@ -88,15 +74,17 @@ export default {
 
           <div>
             <h1 class="text-4xl text-center my-10">レビュー一覧</h1>
-            <div id="review_items" v-for="review in reviews" class="my-10">
-              <p>{{ review.review_title }}</p>
-              <p>{{ review.movie.movie_title }} </p>
-              <p>{{ review.original.origin }}</p>
-              <p>{{ review.score }}</p>
-              <p class="whitespace-pre-wrap">{{ review.review_content }}</p>
-              <p>{{ review.user.name }}</p>
-              <p>{{ review.created_at }}</p>
-              <p>{{ review.updated_at }}</p>
+            <div v-for="review in reviews">
+              <Link :href="route('review', { movie_id:review.movie_id, user_id:review.user_id, review:review.id })" id="review_items">
+                <p>{{ review.review_title }}</p>
+                <p>{{ review.movie.movie_title }} </p>
+                <p>{{ review.original.origin }}</p>
+                <p>{{ review.score }}</p>
+                <p class="whitespace-pre-wrap">{{ review.review_content }}</p>
+                <p>{{ review.user.name }}</p>
+                <p>{{ review.created_at }}</p>
+                <p>{{ review.updated_at }}</p>
+              </Link>
             </div>
           </div>
         </SiteLayout>

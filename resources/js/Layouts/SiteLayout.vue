@@ -8,7 +8,13 @@ import { Inertia } from '@inertiajs/inertia';
 
 defineProps({
     user_name2: {
-        type: String
+        type: String,
+    },
+    home_route: {
+        type: String,
+    },
+    user_route: {
+        type: Number,
     },
 })
 
@@ -22,7 +28,7 @@ const searchValue = () => {
 
 <template>
     <nav>
-        <NavigationLayout :user_name3=user_name2 >
+        <NavigationLayout :user_name3=user_name2 :home_route="home_route" :user_route="user_route" >
             <form @submit.prevent="searchValue">
                 <input type="search" placeholder="キーワードを入力" class="py-1 rounded-l-md border-none focus:ring-0" v-model="search">
                 <input type="submit" value="検索" class="px-5 py-1 text-black bg-stone-500 rounded-r-md focus:outline-0">

@@ -18,7 +18,7 @@ class SearchController extends Controller
         //dd($request->search);
         $word = $request->search;
 
-        $search_results = Movie::where('movie_title', 'like',  '%' . $word . '%')->with('review', 'year')->get();
+        $search_results = Movie::where('movie_title', 'like',  '%' . $word . '%')->with('review' ,'year')->get();
 
         //$review_score = $search_results->review_id->score;
 

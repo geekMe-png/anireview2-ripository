@@ -1,9 +1,10 @@
 <script setup>
 import { Head, Link } from '@inertiajs/vue3';
-import { createApp } from 'vue'
+import { createApp, ref } from 'vue';
 import SiteLayout from "../Layouts/SiteLayout.vue";
 import SearchForm from '@/Components/SearchForm.vue';
 import HeaderLayout from '@/Layouts/HeaderLayout.vue';
+import StarRating from 'vue-star-rating';
 
 defineProps({
     canLogin: {
@@ -30,22 +31,8 @@ defineProps({
         type: Number,
     },
 });
-</script>
 
-<script>
-import StarRating from 'vue-star-rating'
-
-export default {
-    name: 'star-rating',
-    components: {
-        StarRating
-    },
-    data() {
-        return {
-            rating: 3,
-        }
-    },
-}
+const rating = ref(3);
 </script>
 
 <template>
@@ -62,8 +49,8 @@ export default {
                     <div>
                         <p class="text-5xl flex">{{ movie.movie_title }}</p>
                         <star-rating :rating="rating" increment="0.1" read-only class="text-3xl" />
-                        <a href="#">レビューを書く</a>
-                        <a href="#" v-if="auth === 1">作品を編集</a>
+                        <Link :href="route('review.create', { movie_id:movie.id })">レビューを書く</Link>
+                        <Link :href="route('movie.create', { movie_id:movie.id })" v-if="auth === 1">作品を編集</Link>
                     </div>
                 </div>
                 <div class="mt-8">
@@ -90,13 +77,13 @@ export default {
                 <div>
                     <p class="text-3xl text-center">レビュー一覧</p>
                     <div v-for="review in reviews">
-                        <p>{{ review.review_title }}</p>
-                        <p>{{ review.original.origin }}</p>
-                        <p>{{ review.score }}</p>
-                        <p class="whitespace-pre-wrap">{{ review.review_content }}</p>
-                        <p>{{ review.user.name }}</p>
-                        <p>{{ review.created_at }}</p>
-                        <p>{{ review.updated_at }}</p>
+                        <Link :href="route('review', { movie_id:review.movie_id, user_id:review.user_id, review_id:review.id })" id="review_items">
+                            <p>{{ review.review_title }}</p>
+                            <p>{{ review.original.origin }}</p>
+                            <p>{{ review.score }}</p>
+                            <p class="whitespace-pre-wrap">{{ review.review_content }}</p>
+                            <p>{{ review.user.name }}</p>
+                          </Link>
                     </div>
                 </div>
             </div>

@@ -1,4 +1,5 @@
 <script setup>
+import { Head, Link } from '@inertiajs/vue3';
 import SiteLayout from '@/Layouts/SiteLayout.vue';
 import HeaderLayout from '@/Layouts/HeaderLayout.vue';
 
@@ -39,15 +40,17 @@ defineProps({
             <p> 性別：{{ user.gender.gender }} </p>
             <p> {{ reviews_count }} </p>
         </div>
-        <div id="review_items" v-for="review in reviews" class="my-10">
-            <p>{{ review.review_title }}</p>
-            <p>{{ review.movie.movie_title }} </p>
-            <p>{{ review.original.origin }}</p>
-            <p>{{ review.score }}</p>
-            <p class="whitespace-pre-wrap">{{ review.review_content }}</p>
-            <p>{{ review.user.name }}</p>
-            <p>{{ review.created_at }}</p>
-            <p>{{ review.updated_at }}</p>
+        <div v-for="review in reviews" class="my-10">
+            <Link :href="route('review', { movie_id:review.movie_id, user_id:review.user_id, review_id:review.id })" id="review_items">
+                <p>{{ review.review_title }}</p>
+                <p>{{ review.movie.movie_title }} </p>
+                <p>{{ review.original.origin }}</p>
+                <p>{{ review.score }}</p>
+                <p class="whitespace-pre-wrap">{{ review.review_content }}</p>
+                <p>{{ review.user.name }}</p>
+                <p>{{ review.created_at }}</p>
+                <p>{{ review.updated_at }}</p>
+            </Link>
         </div>
     </SiteLayout>
 </template>

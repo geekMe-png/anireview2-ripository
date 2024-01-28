@@ -1,6 +1,6 @@
 <script setup>
 import { Head, Link, router } from '@inertiajs/vue3';
-import { reactive, ref } from 'vue'
+import { reactive, ref } from 'vue';
 import { Inertia } from "@inertiajs/inertia";
 import Sitelayout from '@/Layouts/SiteLayout.vue';
 import HeaderLayout from '@/Layouts/HeaderLayout.vue';

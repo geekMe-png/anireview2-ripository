@@ -19,7 +19,9 @@ class MovieController extends Controller
 
         if(auth()->id()) {
             $auth = Auth::user()->role_id;
-        };
+        }else{
+            $auth = '';
+        }
 
         return Inertia::render('Movie', [
             'canLogin' => Route::has('login'),

@@ -10,6 +10,12 @@ defineProps({
     user_name3: {
         type: String,
     },
+    home_route: {
+        type: String,
+    },
+    user_route: {
+        type: String,
+    },
 })
 
 //ナビゲーション開閉の真偽値
@@ -23,11 +29,13 @@ function Open() {
 
 <template>
     <div class="flex justify-between items-center">
-        <ApplicationLogo class="w-40 fill-current text-gray-500" />
+        <Link :href="home_route">
+            <ApplicationLogo class="w-40 fill-current text-gray-500" />
+        </Link>
         <main>
             <slot />
         </main>
-        <p class="hidden md:mr-11 md:block">{{ user_name3 }}</p>
+        <Link :href="user_route" class="hidden md:mr-11 md:block">{{ user_name3 }}</Link>
         <ApplicationMenuButton @click="Open" :isOpen="isOpen" />
     </div>
     <div>

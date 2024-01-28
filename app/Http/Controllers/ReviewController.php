@@ -14,6 +14,21 @@ use App\Models\User;
 
 class ReviewController extends Controller
 {
+    public function index($movie_id, $user_id, Review $review) {
+        //dd($movie_id);
+        $reviews = Review::where('movie_id', $movie_id)->where('user_id', $user_id)->with('movie', 'user', 'original')->get();
+        //dd($reviews);
+
+        return Inertia::render('Review', [
+            'canLogin' => Route::has('login'),
+            'canRegister' => Route::has('register'),
+            'laravelVersion' => Application::VERSION,
+            'phpVersion' => PHP_VERSION,
+            'reviews' => $reviews,
+            'review_id' => $review,
+        ]);
+    }
+
     public function create($movie_id) {
         $movies = Movie::where('id', $movie_id)->get();
         if(User::where('id')) {
@@ -48,5 +63,11 @@ class ReviewController extends Controller
         ]);
 
         return back();
+    }
+
+    public function destroy(Review $review) {
+        $review->delete();
+        
+        return redirect()->route('welcome');
     }
 }

@@ -15,11 +15,14 @@ class HomeController extends Controller
 {
     public function index() {
         $reviews = Review::with('original', 'movie', 'user')->get();
+        $img_path = Movie::all();
 
         if(auth()->id()) {
             $user_name = Auth::user()->name;
+            $user_id = Auth::user()->id;
         }else{
             $user_name = '';
+            $user_id = '';
         }
 
         return Inertia::render('Welcome', [
@@ -29,6 +32,9 @@ class HomeController extends Controller
             'phpVersion' => PHP_VERSION,
             'reviews' => $reviews,
             'user_name' => $user_name,
+            'img_path' => $img_path,
+            'home_route' => route('welcome'),
+            'user_route' => route('mypage', $user_id),
         ]);
     }
 }

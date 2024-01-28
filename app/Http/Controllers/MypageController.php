@@ -14,8 +14,10 @@ use App\Models\User;
 class MypageController extends Controller
 {
     public function index($user_id) {
+        //dd($user_id);
         //URLパラメータで指定したIDのユーザーのレビュー数と一覧を取得
-        $reviews = Review::with('original', 'user', 'movie')->where('user_id', $user_id)->get();
+        $reviews = Review::where('user_id', $user_id)->with('original', 'user', 'movie')->get();
+        //dd($reviews);
         $reviews_count = Review::where('user_id', $user_id)->count();
 
         //URLパラメータで指定したIDのユーザー情報を取得
