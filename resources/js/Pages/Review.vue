@@ -29,7 +29,13 @@ const props = defineProps({
 });
 
 function submit () {
-    router.delete(route('review.destroy', props.review_id));
+    const remove = confirm("削除しますか？");
+
+    if(remove === true) {
+        router.delete(route('review.destroy', props.review_id));
+    }else{
+        router.get(route('review', props.review_id));
+    }
 }
 </script>
 
@@ -41,7 +47,7 @@ function submit () {
 
         <v-container>
             <div>
-                <Link :href="route('movie', { movie_id:review.movie_id })">
+                <Link :href="route('movie', { movie:review.movie_id })">
                     <img :src="'../../../' + review.movie.movie_img_path" alt="映せません" class="w-44 flex">
                     <p>{{review.movie.movie_title}}</p>
                 </Link>
@@ -55,6 +61,7 @@ function submit () {
             </div>
 
             <div>
+                <Link :href="route('review.create', { movie_id:review.movie_id })">編集</Link>
                 <form @submit.prevent="submit">
                     <input type="submit" value="削除">
                 </form>

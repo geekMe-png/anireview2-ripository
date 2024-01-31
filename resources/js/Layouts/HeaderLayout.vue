@@ -5,9 +5,8 @@ import Character from '@/Components/Character.vue';
 
 <template>
     <div id="header">
-        <div class="flex justify-center items-center">
+        <div class="h-36 flex justify-center items-center my-16">
             <Character />
-
             <p class="text-4xl">
                 <slot />
             </p>

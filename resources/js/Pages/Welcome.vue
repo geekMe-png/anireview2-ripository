@@ -22,17 +22,14 @@ const props = defineProps({
         type: String,
         required: true,
     },
-    user_name: {
-      type: String,
-    },
     reviews: {
       type: Array,
     },
     img_path: {
       type: String,
     },
-    user_id: {
-      type: Number,
+    user_name: {
+      type: String,
     },
     home_route: {
       type: String,
@@ -50,17 +47,17 @@ const slides = props.img_path;
     <Head title="Welcome" />
 
     <v-container class="relative">
-        <SiteLayout :user_name2=user_name :home_route="home_route" :user_route="user_route" >
-          <div class="py-20 bg-black">
+        <SiteLayout :user_name=user_name :home_route="home_route" :user_route="user_route" >
+          <div class="py-20 bg-[url('../../public/assets/images/ヘッダー.png')] bg-center bg-cover ">
             <HeaderLayout class="">
-                    <p class="text-white">こちらは<span class="text-red-600">トップページ</span>です</p>
+                    <p class="text-5xl text-white text-center">アニメレビューサイト</p>
                 </HeaderLayout>
           </div>
           <section class="py-8 bg-stone-500">
             <h1 class="text-4xl text-center mb-10">今期のアニメ</h1>
-            <carousel :items-to-show="5" items-to-scroll="5" autoplay="9000" wrap-around="false">
+            <carousel :items-to-show="5" :items-to-scroll="5" :autoplay="9000" :wrap-around="true" :pauseAutoplayOnHover="true" :transition="300">
               <slide v-for="slide in slides" :key="slide">
-                <Link :href="route('movie', { movie_id: slide.id })">
+                <Link :href="route('movie', { movie:slide.id })">
                   <img :src="'../' + slide.movie_img_path" alt="映せません" class="w-44">
                 </Link>
               </slide>

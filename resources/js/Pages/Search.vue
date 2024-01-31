@@ -1,6 +1,7 @@
 <script setup>
 import SiteLayout from '@/Layouts/SiteLayout.vue';
 import HeaderLayout from '@/Layouts/HeaderLayout.vue';
+import { Link } from '@inertiajs/vue3';
 
 const props = defineProps({
     canLogin: {
@@ -26,23 +27,56 @@ const props = defineProps({
     review_score: {
         type: Number,
     },
+    user_name: {
+      type: String,
+    },
+    home_route: {
+      type: String,
+    },
+    user_route: {
+      type: String,
+    },
 })
 
 console.log(props.word.title);
 </script>
 
 <template>
-    <SiteLayout>
+    <SiteLayout :user_name=user_name :home_route="home_route" :user_route="user_route" >
         <HeaderLayout>
             <p>こちらは<span class="text-red-600">{{ word }}</span>の検索結果です</p>
         </HeaderLayout>
-        <div v-for="search_result in search_results">
-            <img :src="search_result.movie_img_path" alt="映せません">
-            <p>{{ search_result.movie_title }}</p>
-            <p>{{ search_result.about }}</p>
-            <p>{{ search_result.year.year }}</p>
-            <p>{{ search_result.score_average }}</p>
-            <p>{{ review_score }}</p>
+        <div v-for="search_result in search_results" class="py-5">
+            <Link :href="route('movie', search_result.id)" class="relative flex bg-gray-300 rounded-md px-5 py-2 mx-11 overflow-hidden md:px-11 md:mx-32">
+                <img :src="search_result.movie_img_path" alt="映せません" class="static w-40 md:w-48">
+                <div class="relative left-5 md:left-11">
+                    <p class="relative top-2 md:top-3 text-3xl md:text-4xl">{{ search_result.movie_title }}</p>
+                    <div class="relative top-4 mr-7">
+                        <p class="font-medium">あらすじ</p>
+                        <p class="line-clamp-2 md:line-clamp-3 overflow-hidden">{{ search_result.about }}</p>
+                    </div>
+                    <div class="relative top-5 md:top-7">
+                        <div class="flex space-x-2 md:space-x-16">
+                            <div>
+                                <p class="font-medium">原作</p>
+                                <p> {{ search_result.auther }} </p>
+                            </div>
+                            <div>
+                                <p class="font-medium">監督</p>
+                                <p> {{ search_result.directer }} </p>
+                            </div>
+                            <div>
+                                <p class="font-medium">制作会社</p>
+                                <p> {{ search_result.company }} </p>
+                            </div>
+                        </div>
+                        <div class="pt-1">
+                            <p class="font-medium">年代</p>
+                            <p>{{ search_result.year.year }}</p>
+                        </div>
+                    </div>
+                </div>
+            </Link>
         </div>
     </SiteLayout>
 </template>

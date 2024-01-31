@@ -23,7 +23,7 @@ use App\Http\Controllers\SearchController;
 
 Route::get('/', [HomeController::class, 'index'])->name('welcome');
 
-Route::get('/review/{movie_id}/{user_id}/{review}', [ReviewController::class, 'index'])->name('review');
+Route::get('/review/{review}', [ReviewController::class, 'index'])->name('review');
 
 Route::delete('/review/{review}', [ReviewController::class, 'destroy'])->name('review.destroy');
 
@@ -31,7 +31,9 @@ Route::get('/review-edit/{movie_id}', [ReviewController::class, 'create'])->name
 
 Route::post('/review-edit/{movie_id}', [ReviewController::class, 'store'])->name('review.store');
 
-Route::get('/movie/{movie_id}', [MovieController::class, 'index'])->name('movie');
+Route::get('/movie/{movie}', [MovieController::class, 'index'])->name('movie');
+
+Route::delete('/movie/{movie}', [MovieController::class, 'destroy'])->name('movie.destroy');
 
 Route::get('/movie-edit', [MovieController::class, 'create'])->name('movie.create');
 

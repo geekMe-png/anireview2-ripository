@@ -7,7 +7,7 @@ import { reactive } from 'vue';
 import { Inertia } from '@inertiajs/inertia';
 
 defineProps({
-    user_name2: {
+    user_name: {
         type: String,
     },
     home_route: {
@@ -28,11 +28,14 @@ const searchValue = () => {
 
 <template>
     <nav>
-        <NavigationLayout :user_name3=user_name2 :home_route="home_route" :user_route="user_route" >
-            <form @submit.prevent="searchValue">
-                <input type="search" placeholder="キーワードを入力" class="py-1 rounded-l-md border-none focus:ring-0" v-model="search">
-                <input type="submit" value="検索" class="px-5 py-1 text-black bg-stone-500 rounded-r-md focus:outline-0">
-            </form>
+        <NavigationLayout :home_route="home_route" :user_name="user_name">
+            <div class="">
+                <form @submit.prevent="searchValue" class="md:pr-8 pt-9 pb-3">
+                    <input type="search" placeholder="キーワードを入力" class="py-1 rounded-l-md border-none focus:ring-0" v-model="search">
+                    <input type="submit" value="検索" class="px-5 py-1 text-black bg-stone-500 rounded-r-md focus:outline-0">
+                </form>
+                <p class="text-right md:mr-11">ユーザー：<Link :href="user_route" class="hover:text-white">{{ user_name }}</Link></p>
+            </div>
         </NavigationLayout>
     </nav>
 
@@ -40,4 +43,6 @@ const searchValue = () => {
     <main>
         <slot />
     </main>
+
+    <div class="my-11 bg-stone-500"></div>
 </template>

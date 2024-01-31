@@ -15,7 +15,7 @@ class HomeController extends Controller
 {
     public function index() {
         $reviews = Review::with('original', 'movie', 'user')->get();
-        $img_path = Movie::all();
+        $img_path = Movie::take(10)->get();
 
         if(auth()->id()) {
             $user_name = Auth::user()->name;
@@ -31,8 +31,8 @@ class HomeController extends Controller
             'laravelVersion' => Application::VERSION,
             'phpVersion' => PHP_VERSION,
             'reviews' => $reviews,
-            'user_name' => $user_name,
             'img_path' => $img_path,
+            'user_name' => $user_name,
             'home_route' => route('welcome'),
             'user_route' => route('mypage', $user_id),
         ]);

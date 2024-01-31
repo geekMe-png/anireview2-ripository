@@ -41,7 +41,7 @@ defineProps({
             <p> {{ reviews_count }} </p>
         </div>
         <div v-for="review in reviews" class="my-10">
-            <Link :href="route('review', { movie_id:review.movie_id, user_id:review.user_id, review_id:review.id })" id="review_items">
+            <Link :href="route('review', { movie_id:review.movie_id, user_id:review.user_id, review:review.id })" id="review_items">
                 <p>{{ review.review_title }}</p>
                 <p>{{ review.movie.movie_title }} </p>
                 <p>{{ review.original.origin }}</p>

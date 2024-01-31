@@ -7,15 +7,12 @@ import ApplicationMenuList from '@/Components/ApplicationMenuList.vue';
 import FormNavigation from '@/Components/FormNavigation.vue';
 
 defineProps({
-    user_name3: {
-        type: String,
-    },
     home_route: {
         type: String,
     },
-    user_route: {
+    user_name: {
         type: String,
-    },
+    }
 })
 
 //ナビゲーション開閉の真偽値
@@ -35,10 +32,10 @@ function Open() {
         <main>
             <slot />
         </main>
-        <Link :href="user_route" class="hidden md:mr-11 md:block">{{ user_name3 }}</Link>
         <ApplicationMenuButton @click="Open" :isOpen="isOpen" />
     </div>
+
     <div>
-        <ApplicationMenuList :class="isOpen ? 'block' : 'hidden'" />
+        <ApplicationMenuList :class="isOpen ? 'block' : 'hidden'" :user_name="user_name" />
     </div>
 </template>

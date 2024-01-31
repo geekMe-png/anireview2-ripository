@@ -14,9 +14,9 @@ use App\Models\User;
 
 class ReviewController extends Controller
 {
-    public function index($movie_id, $user_id, Review $review) {
-        //dd($movie_id);
-        $reviews = Review::where('movie_id', $movie_id)->where('user_id', $user_id)->with('movie', 'user', 'original')->get();
+    public function index(Review $review) {
+        //dd($review->id);
+        $reviews = Review::where('id', $review->id)->with('movie', 'user', 'original')->get();
         //dd($reviews);
 
         return Inertia::render('Review', [

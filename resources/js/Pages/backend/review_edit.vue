@@ -104,8 +104,6 @@ function submit () {
                     <textarea id="review_content" name="review_content" cols="30" rows="10" v-model="form.review_content"></textarea>
                 </div>
 
-                <input type="hidden" name="movie_id" v-model="form.movie_id">
-
                 <div>
                     <PrimaryButton>
                         <input type="submit" value="確定">

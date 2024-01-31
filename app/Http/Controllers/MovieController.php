@@ -13,9 +13,24 @@ use App\Models\Review;
 
 class MovieController extends Controller
 {
-    public function index($movie_id) {
-        $movies = Movie::with('year')->where('id', $movie_id)->get();
-        $reviews = Review::with('original', 'user')->where('movie_id', $movie_id)->get();
+    public function index(Movie $movie) {
+        $movies = Movie::with('year')->where('id', $movie->id)->get();
+
+        $reviews = Review::with('original', 'user')->where('movie_id', $movie->id)->get();
+
+        if($reviews->count() > 0) {
+            $review_score = $reviews->sum('score');
+            $review_count = $reviews->count();
+            $review_average = round($review_score / $review_count, 1);
+
+        }else{
+            $review_score = '';
+            $review_count = '';
+            $review_average = '';
+
+        }
+
+        //dd($review_average);
 
         if(auth()->id()) {
             $auth = Auth::user()->role_id;
@@ -31,6 +46,9 @@ class MovieController extends Controller
             'movies' => $movies,
             'reviews' => $reviews,
             'auth' => $auth,
+            'movie_id' => $movie,
+            'review_count' => $review_count,
+            'review_average' => $review_average,
         ]);
     }
 
@@ -77,5 +95,11 @@ class MovieController extends Controller
         ]);
 
         return back();
+    }
+
+    public function destroy(Movie $movie) {
+        $movie->delete();
+        
+        return redirect()->route('welcome');
     }
 }
