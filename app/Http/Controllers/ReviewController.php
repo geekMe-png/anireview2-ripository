@@ -16,16 +16,30 @@ class ReviewController extends Controller
 {
     public function index(Review $review) {
         //dd($review->id);
-        $reviews = Review::where('id', $review->id)->with('movie', 'user', 'original')->get();
-        //dd($reviews);
+        $user_reviews = Review::where('id', $review->id)->with('movie', 'user', 'original')->get();
+        $reviews = Review::where('movie_id', $review->movie_id)->with('original', 'user')->get();
+        //dd($user_reviews);
+
+        if($reviews->count() > 0) {
+            $review_score = $reviews->sum('score');
+            $review_count = $reviews->count();
+            $review_average = round($review_score / $review_count, 1);
+
+        }else{
+            $review_score = '';
+            $review_count = '';
+            $review_average = '';
+        }
 
         return Inertia::render('Review', [
             'canLogin' => Route::has('login'),
             'canRegister' => Route::has('register'),
             'laravelVersion' => Application::VERSION,
             'phpVersion' => PHP_VERSION,
-            'reviews' => $reviews,
+            'reviews' => $user_reviews,
             'review_id' => $review,
+            'review_count' => $review_count,
+            'review_average' => $review_average,
         ]);
     }
 

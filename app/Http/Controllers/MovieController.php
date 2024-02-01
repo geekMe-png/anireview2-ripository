@@ -27,7 +27,6 @@ class MovieController extends Controller
             $review_score = '';
             $review_count = '';
             $review_average = '';
-
         }
 
         //dd($review_average);

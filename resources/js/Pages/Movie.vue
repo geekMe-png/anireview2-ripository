@@ -60,24 +60,24 @@ function submit () {
     <v-container id="app" class="" v-for="movie in movies">
         <SiteLayout>
             <HeaderLayout>
-                <p>こちらは<span class="text-red-600">『{{ movie.movie_title }}』</span>のページです</p>
+                <p>こちらは<br><span class="text-red-600">『{{ movie.movie_title }}』</span><br>のページです</p>
             </HeaderLayout>
             <div class="mx-3 md:mx-10">
                 <div class="relative flex px-3 py-5 md:px-28 bg-gray-300 rounded-md">
-                    <img :src="'../' + movie.movie_img_path" alt="映せません" class="static w-44 flex">
-                    <div class="relative left-6 md:left-16">
-                        <p class="static text-5xl text-gray-600 font-bold">{{ movie.movie_title }}</p>
+                    <img :src="'../' + movie.movie_img_path" alt="映せません" class="static w-32 h-50 md:w-44 md:h-64 flex">
+                    <div class="relative bottom-1 left-6 md:bottom-0 md:left-16">
+                        <p class="static text-3xl md:text-4xl text-gray-600 font-bold">{{ movie.movie_title }}</p>
                         <div class="relative flex items-center">
                             <star-rating :rating="rating" increment="0.1" read-only :show-rating="false" :star-size="38" inactive-color="#778899" class="text-3xl" />
                             <p class="relative top-2 text-4xl pl-1">{{ rating }}</p>
                             <p class="relative top-2 left-2 text-3xl">({{ review_count }})</p>
                         </div>
                         <div>
-                            <Link :href="route('review.create', { movie_id:movie.id })" class="relative top-7 left-1 text-2xl text-white font-semibold bg-orange-500 border-2 border-orange-600 rounded-md px-28 py-1 md:px-64 hover:border-orange-200">レビューを書く</Link>
+                            <Link :href="route('review.create', { movie_id:movie.id })" class="relative top-3 md:top-11 left-1 text-2xl text-white font-semibold bg-orange-500 border-2 border-orange-600 rounded-md px-16 py-0 md:py-2 md:px-64 hover:border-orange-200">レビューを書く</Link>
                         </div>
-                        <div class="relative top-12 right-1 flex space-x-4">
-                            <Link :href="route('movie.create', { movie_id:movie.id })" v-if="auth === 1" class="relative left-2 text-white font-semibold bg-orange-500 border-2 border-orange-600 rounded-l-md px-12 py-6 md:px-28 hover:border-orange-200">作品を編集</Link>
-                            <form @submit.prevent="submit" v-if="auth === 1" class="relative right-2 text-white font-semibold bg-orange-500 border-2 border-orange-600 rounded-r-md px-12 py-6 md:px-28 hover:border-orange-200">
+                        <div class="relative top-4 md:top-16 right-1 md:left-3 flex space-x-4">
+                            <Link :href="route('movie.create', { movie_id:movie.id })" v-if="auth === 1" class="relative left-2 text-white font-semibold bg-orange-500 border-2 border-orange-600 rounded-l-md px-6 py-5 md:px-28 hover:border-orange-200">作品を編集</Link>
+                            <form @submit.prevent="submit" v-if="auth === 1" class="relative right-2 text-white font-semibold bg-orange-500 border-2 border-orange-600 rounded-r-md px-6 py-5 md:px-28 hover:border-orange-200">
                                 <input type="submit" value="作品を削除">
                             </form>
                         </div>
@@ -111,7 +111,7 @@ function submit () {
             </div>
             <div class="relative top-8 mx-3">
                 <p class="text-4xl text-center text-white font-mono">レビュー一覧</p>
-                <div class="p-3 my-4 bg-gray-300 overflow-y-scroll h-64 rounded-lg">
+                <div class="p-3 my-4 bg-gray-300 overflow-y-scroll h-64 md:h-80 rounded-lg">
                     <div v-for="review in reviews" class="py-5 font-mono border-b border-dashed border-gray-500">
                         <p>ユーザー：<Link :href="route('mypage', { user_id:review.user_id })">{{ review.user.name }}</Link></p>
                         <div class="flex items-center space-x-2">

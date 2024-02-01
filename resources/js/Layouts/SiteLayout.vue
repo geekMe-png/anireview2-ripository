@@ -29,12 +29,12 @@ const searchValue = () => {
 <template>
     <nav>
         <NavigationLayout :home_route="home_route" :user_name="user_name">
-            <div class="">
-                <form @submit.prevent="searchValue" class="md:pr-8 pt-9 pb-3">
-                    <input type="search" placeholder="キーワードを入力" class="py-1 rounded-l-md border-none focus:ring-0" v-model="search">
-                    <input type="submit" value="検索" class="px-5 py-1 text-black bg-stone-500 rounded-r-md focus:outline-0">
+            <div class="relative">
+                <form @submit.prevent="searchValue" class="relative right-3 top-2">
+                    <input type="search" placeholder="キーワードを入力" class="px-0 py-1 md:px-4 md:py-1 rounded-l-md border-none focus:ring-0" v-model="search">
+                    <input type="submit" value="検索" class="px-2 py-1 md:px-5 text-black bg-stone-500 rounded-r-md focus:outline-0">
                 </form>
-                <p class="text-right md:mr-11">ユーザー：<Link :href="user_route" class="hover:text-white">{{ user_name }}</Link></p>
+                <p class="relative text-right right-2 top-3">ユーザー：<Link :href="user_route" class="hover:text-white">{{ user_name }}</Link></p>
             </div>
         </NavigationLayout>
     </nav>

@@ -43,30 +43,6 @@ defineProps({
 });
 </script>
 
-<script>
-import StarRating from 'vue-star-rating'
-
-export default {
-    name: 'star-rating',
-    components: {
-        StarRating
-    },
-    data() {
-        return {
-            rating: 3,
-        }
-    },
-    methods: {
-        setRating (value) {
-            this.rating = value;
-        },
-        getRating (value) {
-            this.rating = value;
-        },
-    }
-}
-</script>
-
 <template>
     <Head title="review/edit" />
 

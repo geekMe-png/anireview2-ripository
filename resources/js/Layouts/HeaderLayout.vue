@@ -7,7 +7,7 @@ import Character from '@/Components/Character.vue';
     <div id="header">
         <div class="h-36 flex justify-center items-center my-16">
             <Character />
-            <p class="text-4xl">
+            <p class="text-2xl md:text-4xl">
                 <slot />
             </p>
         </div>
