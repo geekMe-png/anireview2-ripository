@@ -32,9 +32,9 @@ const searchValue = () => {
             <div class="relative">
                 <form @submit.prevent="searchValue" class="relative right-3 top-2">
                     <input type="search" placeholder="キーワードを入力" class="px-0 py-1 md:px-4 md:py-1 rounded-l-md border-none focus:ring-0" v-model="search">
-                    <input type="submit" value="検索" class="px-2 py-1 md:px-5 text-black bg-stone-500 rounded-r-md focus:outline-0">
+                    <input type="submit" value="検索" class="px-2 py-1 md:px-5 text-stone-700 hover:text-white font-bold bg-stone-500 rounded-r-md focus:outline-0">
                 </form>
-                <p class="relative text-right right-2 top-3">ユーザー：<Link :href="user_route" class="hover:text-white">{{ user_name }}</Link></p>
+                <p class="relative right-5 top-3 text-lg font-sans text-right">ユーザー：<Link :href="user_route" class="font-bold hover:text-white">{{ user_name }}</Link></p>
             </div>
         </NavigationLayout>
     </nav>

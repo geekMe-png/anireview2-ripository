@@ -25,15 +25,19 @@ class MovieController extends Controller
 
         }else{
             $review_score = '';
-            $review_count = '';
-            $review_average = '';
+            $review_count = 0;
+            $review_average = '--';
         }
 
         //dd($review_average);
 
         if(auth()->id()) {
+            $user_name = Auth::user()->name;
+            $user_id = Auth::user()->id;
             $auth = Auth::user()->role_id;
         }else{
+            $user_name = '';
+            $user_id = '';
             $auth = '';
         }
 
@@ -45,19 +49,35 @@ class MovieController extends Controller
             'movies' => $movies,
             'reviews' => $reviews,
             'auth' => $auth,
+            'user_name' => $user_name,
+            'user_id' => $user_id,
             'movie_id' => $movie,
             'review_count' => $review_count,
             'review_average' => $review_average,
+            'home_route' => route('welcome'),
+            'user_route' => route('mypage', $user_id),
         ]);
     }
 
     public function create() {
+        if(auth()->id()) {
+            $user_name = Auth::user()->name;
+            $user_id = Auth::user()->id;
+        }else{
+            $user_name = '';
+            $user_id = '';
+        }
+
         return Inertia::render('backend/movie_edit', [
             'canLogin' => Route::has('login'),
             'canRegister' => Route::has('register'),
             'laravelVersion' => Application::VERSION,
             'phpVersion' => PHP_VERSION,
             'years' => Year::all(),
+            'user_name' => $user_name,
+            'user_id' => $user_id,
+            'home_route' => route('welcome'),
+            'user_route' => route('mypage', $user_id),
         ]);
     }
 

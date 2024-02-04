@@ -14,7 +14,7 @@ use App\Models\Review;
 class HomeController extends Controller
 {
     public function index() {
-        $reviews = Review::with('original', 'movie', 'user')->get();
+        $reviews = Review::take(5)->with('original', 'movie', 'user')->get();
         $img_path = Movie::take(10)->get();
 
         if(auth()->id()) {
@@ -33,6 +33,7 @@ class HomeController extends Controller
             'reviews' => $reviews,
             'img_path' => $img_path,
             'user_name' => $user_name,
+            'user_id' => $user_id,
             'home_route' => route('welcome'),
             'user_route' => route('mypage', $user_id),
         ]);

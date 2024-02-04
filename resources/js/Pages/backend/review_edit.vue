@@ -2,7 +2,7 @@
 import { Head, Link, router } from '@inertiajs/vue3';
 import { reactive, ref } from 'vue';
 import { Inertia } from "@inertiajs/inertia";
-import Sitelayout from '@/Layouts/SiteLayout.vue';
+import SiteLayout from '@/Layouts/SiteLayout.vue';
 import HeaderLayout from '@/Layouts/HeaderLayout.vue';
 import PrimaryButton from '@/Components/PrimaryButton.vue';
 import StarRating from 'vue-star-rating'
@@ -37,6 +37,12 @@ const props = defineProps({
     movie_id: {
         type: Number,
     },
+    home_route: {
+      type: String,
+    },
+    user_route: {
+      type: String,
+    },
 });
 
 const rating = ref(3);
@@ -65,7 +71,7 @@ function submit () {
 <template>
     <Head title="review/edit" />
 
-    <Sitelayout v-for="movie in movies">
+    <SiteLayout v-for="movie in movies" :user_name="user_name" :home_route="home_route" :user_route="user_route">
         <HeaderLayout>
             <p>こちらは<br><span class="text-red-600">『{{ movie.movie_title }}』</span><br>のレビューページです！</p>
         </HeaderLayout>
@@ -127,5 +133,5 @@ function submit () {
                 </div>
             </form>
         </div>
-    </Sitelayout>
+    </SiteLayout>
 </template>

@@ -30,6 +30,12 @@ const props = defineProps({
     auth: {
         type: Number,
     },
+    user_name: {
+        type: String,
+    },
+    user_id: {
+        type: Number,
+    },
     movie_id: {
         type: Number,
     },
@@ -38,7 +44,13 @@ const props = defineProps({
     },
     review_count: {
         type: Number,
-    }
+    },
+    home_route: {
+      type: String,
+    },
+    user_route: {
+      type: String,
+    },
 });
 
 const rating = ref(props.review_average);
@@ -58,12 +70,12 @@ function submit () {
     <Head title="Movie" />
 
     <v-container id="app" class="" v-for="movie in movies">
-        <SiteLayout>
+        <SiteLayout :user_name=user_name :home_route="home_route" :user_route="user_route">
             <HeaderLayout>
                 <p>こちらは<br><span class="text-red-600">『{{ movie.movie_title }}』</span><br>のページです</p>
             </HeaderLayout>
             <div class="mx-3 md:mx-10">
-                <div class="relative flex px-3 py-5 md:px-28 bg-gray-300 rounded-md">
+                <div class="relative flex px-3 py-5 md:px-28 bg-gray-300 rounded-md opacity-80 shadow-xl">
                     <img :src="'../' + movie.movie_img_path" alt="映せません" class="static w-32 h-50 md:w-44 md:h-64 flex">
                     <div class="relative bottom-1 left-6 md:bottom-0 md:left-16">
                         <p class="static text-3xl md:text-4xl text-gray-600 font-bold">{{ movie.movie_title }}</p>

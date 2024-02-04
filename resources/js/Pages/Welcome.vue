@@ -6,6 +6,7 @@ import HeaderLayout from '@/Layouts/HeaderLayout.vue';
 import 'vue3-carousel/dist/carousel.css';
 import { Carousel, Slide, Pagination, Navigation } from 'vue3-carousel';
 import { Inertia } from '@inertiajs/inertia';
+import StarRating from 'vue-star-rating';
 
 const props = defineProps({
     canLogin: {
@@ -31,6 +32,9 @@ const props = defineProps({
     user_name: {
       type: String,
     },
+    user_id: {
+      type: String,
+    },
     home_route: {
       type: String,
     },
@@ -47,44 +51,48 @@ const slides = props.img_path;
     <Head title="Welcome" />
 
     <v-container class="relative">
-        <SiteLayout :user_name=user_name :home_route="home_route" :user_route="user_route" >
-          <div class="py-20 bg-[url('../../public/assets/images/ヘッダー.png')] bg-center bg-cover ">
-            <HeaderLayout class="">
-                    <p class="text-5xl text-white text-center">アニメレビューサイト</p>
-                </HeaderLayout>
-          </div>
-          <section class="py-8 bg-stone-500">
-            <h1 class="text-4xl text-center mb-10">今期のアニメ</h1>
-            <carousel :items-to-show="5" :items-to-scroll="5" :autoplay="9000" :wrap-around="true" :pauseAutoplayOnHover="true" :transition="300">
-              <slide v-for="slide in slides" :key="slide">
-                <Link :href="route('movie', { movie:slide.id })">
-                  <img :src="'../' + slide.movie_img_path" alt="映せません" class="w-44">
-                </Link>
-              </slide>
-
-              <template #addons="{ slidesCount }">
-                <navigation />
-                <pagination />
-              </template>
-            </carousel>
-          </section>
-
-          <div>
-            <h1 class="text-4xl text-center my-10">レビュー一覧</h1>
-            <div v-for="review in reviews">
-              <Link :href="route('review', { movie_id:review.movie_id, user_id:review.user_id, review:review.id })" id="review_items">
-                <p>{{ review.review_title }}</p>
-                <p>{{ review.movie.movie_title }} </p>
-                <p>{{ review.original.origin }}</p>
-                <p>{{ review.score }}</p>
-                <p class="whitespace-pre-wrap">{{ review.review_content }}</p>
-                <p>{{ review.user.name }}</p>
-                <p>{{ review.created_at }}</p>
-                <p>{{ review.updated_at }}</p>
+      <SiteLayout :user_name="user_name" :home_route="home_route" :user_route="user_route" >
+        <div class="py-5 bg-[url('../../public/assets/images/ヘッダー.png')] bg-center bg-cover ">
+          <HeaderLayout class="">
+            <p class="text-[28px] font-bold md:text-5xl text-white text-center">アニメレビューサイトにようこそ！</p>
+          </HeaderLayout>
+        </div>
+        <section class="py-8 bg-stone-500">
+          <h1 class="py-2 mx-5 md:mx-80 text-2xl md:text-4xl text-black font-bold text-center border-y-4 border-stone-700">今期のアニメ</h1>
+          <carousel :items-to-show="5" :items-to-scroll="5" :autoplay="9000" :wrap-around="true" :pauseAutoplayOnHover="true" :transition="300" class="my-8">
+            <slide v-for="slide in slides" :key="slide">
+              <Link :href="route('movie', { movie:slide.id })">
+                <img :src="'../' + slide.movie_img_path" alt="映せません" class="w-44">
               </Link>
+            </slide>
+
+            <template #addons="{ slidesCount }">
+              <navigation />
+              <pagination />
+            </template>
+          </carousel>
+        </section>
+
+        <div class="mx-8 md:mx-32">
+          <p class="md:mx-80 my-16 text-2xl md:text-4xl text-white font-bold font-sans text-center">レビュー一覧</p>
+          <Link :href="route('review', { movie_id:review.movie_id, user_id:review.user_id, review:review.id })" v-for="review in reviews" class="flex items-center px-3 py-3 my-6 h-50 bg-gray-300 rounded-md space-x-4">
+            <div class="relative text-gray-700 space-y-1">
+                <img :src="'../' + review.movie.movie_img_path" alt="映せません" class="h-28 md:h-32">
+                <p class="w-20 text-sm font-bold text-center truncate">{{ review.movie.movie_title }}</p>
             </div>
-          </div>
-        </SiteLayout>
+            <div id="review_items" class="">
+                <p class="relative top-1 text-gray-700 font-mono underline">{{ review.review_title }}</p>
+                <p class="relative my-1 text-gray-700 font-mono">原作：{{ review.original.origin }}</p>
+                <p class="relative top-2 my-2 text-[15px] text-gray-600 font-mono max-w-[300px] md:max-w-[850px] max-h-[70px] line-clamp-2">{{review.review_content}}</p>
+                <div class="flex space-x-1">
+                  <star-rating :rating="review.score" increment="0.1" read-only :show-rating="false" :star-size="18" inactive-color="#778899" class="text-3xl" />
+                  <p class="relative top-[13px] text-sm text-gray-600 font-bold">{{ review.score }}</p>
+                </div>
+                <p class="relative bottom-1 text-gray-600 text-md">{{ review.user.name }}</p>
+            </div>
+          </Link>
+        </div>
+      </SiteLayout>
     </v-container>
 </template>
 

@@ -10,6 +10,7 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Redirect;
 use Inertia\Inertia;
 use Inertia\Response;
+use App\Models\Gender;
 
 class ProfileController extends Controller
 {
@@ -18,9 +19,27 @@ class ProfileController extends Controller
      */
     public function edit(Request $request): Response
     {
+        $genders = Gender::all();
+
+        if(auth()->id()) {
+            $user_name = Auth::user()->name;
+            $user_id = Auth::user()->id;
+            $user_gender = Auth::user()->gender_id;
+        }else{
+            $user_name = '';
+            $user_id = '';
+            $user_gender = '';
+        }
+
         return Inertia::render('Profile/Edit', [
             'mustVerifyEmail' => $request->user() instanceof MustVerifyEmail,
             'status' => session('status'),
+            'genders' => $genders,
+            'user_gender' => $user_gender,
+            'user_name' => $user_name,
+            'user_id' => $user_id,
+            'home_route' => route('welcome'),
+            'user_route' => route('mypage', $user_id),
         ]);
     }
 
