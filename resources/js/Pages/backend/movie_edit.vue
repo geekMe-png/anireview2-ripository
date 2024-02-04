@@ -6,25 +6,7 @@ import Sitelayout from '@/Layouts/SiteLayout.vue';
 import HeaderLayout from '@/Layouts/HeaderLayout.vue';
 import PrimaryButton from '@/Components/PrimaryButton.vue';
 
-const form = reactive({
-    movie_title: null,
-    movie_about: null,
-    author: null,
-    directer: null,
-    screenwriter: null,
-    characterdesign: null,
-    music: null,
-    movie_cast: null,
-    company: null,
-    year_id: null,
-    movie_img: null,
-})
-
-const submit = () => {
-    Inertia.post(route('movie.store'), form)
-}
-
-defineProps({
+const props = defineProps({
     canLogin: {
         type: Boolean,
     },
@@ -42,6 +24,9 @@ defineProps({
     years: {
         type: Array,
     },
+    movies: {
+        type: Array,
+    },
     user_name: {
       type: String,
     },
@@ -55,6 +40,27 @@ defineProps({
       type: String,
     },
 });
+
+//console.log(props.years[0].year);
+//console.log(props.movies[0]);
+
+const form = reactive({
+    movie_title: props.movies[0].movie_title,
+    movie_about: props.movies[0].about,
+    auther: props.movies[0].auther,
+    directer: props.movies[0].directer,
+    screenwriter: props.movies[0].screenwriter,
+    characterdesign: props.movies[0].caracterdesign,
+    music: props.movies[0].music,
+    movie_cast: props.movies[0].cast,
+    company: props.movies[0].company,
+    year_id: props.movies[0].year_id,
+    movie_img: props.movies[0].movie_img,
+})
+
+const submit = () => {
+    Inertia.post(route('movie.store'), form)
+}
 </script>
 
 <template>

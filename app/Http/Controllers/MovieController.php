@@ -59,7 +59,7 @@ class MovieController extends Controller
         ]);
     }
 
-    public function create() {
+    public function create($movie_id) {
         if(auth()->id()) {
             $user_name = Auth::user()->name;
             $user_id = Auth::user()->id;
@@ -68,17 +68,48 @@ class MovieController extends Controller
             $user_id = '';
         }
 
-        return Inertia::render('backend/movie_edit', [
-            'canLogin' => Route::has('login'),
-            'canRegister' => Route::has('register'),
-            'laravelVersion' => Application::VERSION,
-            'phpVersion' => PHP_VERSION,
-            'years' => Year::all(),
-            'user_name' => $user_name,
-            'user_id' => $user_id,
-            'home_route' => route('welcome'),
-            'user_route' => route('mypage', $user_id),
-        ]);
+        if($movie_id == 0) {
+            $movies = [0 => [
+                'movie_title' => null,
+                'about' => null,
+                'auther' => null,
+                'directer' => null,
+                'screenwriter' => null,
+                'caracterdesign' => null,
+                'music' => null,
+                'cast' => null,
+                'company' => null,
+                'year_id' => null,
+                'movie_img' => null,
+            ]];
+
+            return Inertia::render('backend/movie_edit', [
+                'canLogin' => Route::has('login'),
+                'canRegister' => Route::has('register'),
+                'laravelVersion' => Application::VERSION,
+                'phpVersion' => PHP_VERSION,
+                'years' => Year::all(),
+                'movies' => $movies,
+                'user_name' => $user_name,
+                'user_id' => $user_id,
+                'home_route' => route('welcome'),
+                'user_route' => route('mypage', $user_id),
+            ]);   
+        }else{
+            $movies = Movie::where('id', $movie_id)->with('year')->get();
+            return Inertia::render('backend/movie_edit', [
+                'canLogin' => Route::has('login'),
+                'canRegister' => Route::has('register'),
+                'laravelVersion' => Application::VERSION,
+                'phpVersion' => PHP_VERSION,
+                'years' => Year::all(),
+                'movies' => $movies,
+                'user_name' => $user_name,
+                'user_id' => $user_id,
+                'home_route' => route('welcome'),
+                'user_route' => route('mypage', $user_id),
+            ]); 
+        }
     }
 
     public function store(Request $request) {
