@@ -65,7 +65,7 @@ function submit () {
 <template>
     <SiteLayout v-for="review in reviews" :user_name="user_name" :home_route="home_route" :user_route="user_route">
         <HeaderLayout>
-            <p>こちらは<span class="text-red-600"><Link :href="route('mypage', { user_id:user_id })">{{review.user.name}}</Link></span>さんのレビューです</p>
+            <p>こちらは<span class="text-red-600 hover:text-red-700"><Link :href="route('mypage', { user_id:user_id })">{{review.user.name}}</Link></span>さんのレビューです</p>
         </HeaderLayout>
 
         <div class="relative mx-3">
@@ -83,7 +83,7 @@ function submit () {
                         </div>
                     </div>
                 </div>
-                <div class="p-3 md:mx-20 bg-gray-300 rounded-md space-y-5">
+                <div class="p-3 md:mx-20 bg-gray-300 rounded-md space-y-5 overflow-hidden">
                     <div class="space-y-1">
                         <p class="text-2xl font-bold">{{ review.review_title }}</p>
                         <div class="relative bottom-3 flex">
@@ -92,7 +92,7 @@ function submit () {
                         </div>
                         <p class="">原作：{{ review.original.origin }}</p>
                     </div>
-                    <p class="pb-5 font-mono border-b border-black whitespace-pre-wrap">{{ review.review_content }}</p>
+                    <p class="pb-5 font-mono border-b border-black whitespace-pre-wrap break-words">{{ review.review_content }}</p>
                     <p class="text-lg font-bold">ユーザー：<Link :href="route('mypage', review.user_id)"  class="hover:text-gray-700">{{ review.user.name }}</Link></p>
                     <div class="relative bottom-5">
                         <p> {{ create_time }} </p>

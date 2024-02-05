@@ -20,6 +20,9 @@ class SearchController extends Controller
 
         $search_results = Movie::where('movie_title', 'like',  '%' . $word . '%')->with('review' ,'year')->get();
 
+        $search_count = $search_results->count();
+        //dd($search_count);
+
         if(auth()->id()) {
             $user_name = Auth::user()->name;
             $user_id = Auth::user()->id;
@@ -48,6 +51,7 @@ class SearchController extends Controller
             'phpVersion' => PHP_VERSION,
             'word' => $word,
             'search_results' => $search_results,
+            'search_count' => $search_count,
             'user_name' => $user_name,
             'home_route' => route('welcome'),
             'user_route' => route('mypage', $user_id),
