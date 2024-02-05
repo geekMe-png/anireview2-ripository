@@ -59,7 +59,7 @@ class MovieController extends Controller
         ]);
     }
 
-    public function create($movie_id) {
+    public function create() {
         if(auth()->id()) {
             $user_name = Auth::user()->name;
             $user_id = Auth::user()->id;
@@ -68,51 +68,36 @@ class MovieController extends Controller
             $user_id = '';
         }
 
-        if($movie_id == 0) {
-            $movies = [0 => [
-                'movie_title' => null,
-                'about' => null,
-                'auther' => null,
-                'directer' => null,
-                'screenwriter' => null,
-                'caracterdesign' => null,
-                'music' => null,
-                'cast' => null,
-                'company' => null,
-                'year_id' => null,
-                'movie_img' => null,
-            ]];
+        $movies = [0 => [
+            'movie_title' => null,
+            'about' => null,
+            'auther' => null,
+            'directer' => null,
+            'screenwriter' => null,
+            'caracterdesign' => null,
+            'music' => null,
+            'cast' => null,
+            'company' => null,
+            'year_id' => null,
+            'movie_img' => null,
+        ]];
 
-            return Inertia::render('backend/movie_edit', [
-                'canLogin' => Route::has('login'),
-                'canRegister' => Route::has('register'),
-                'laravelVersion' => Application::VERSION,
-                'phpVersion' => PHP_VERSION,
-                'years' => Year::all(),
-                'movies' => $movies,
-                'user_name' => $user_name,
-                'user_id' => $user_id,
-                'home_route' => route('welcome'),
-                'user_route' => route('mypage', $user_id),
-            ]);   
-        }else{
-            $movies = Movie::where('id', $movie_id)->with('year')->get();
-            return Inertia::render('backend/movie_edit', [
-                'canLogin' => Route::has('login'),
-                'canRegister' => Route::has('register'),
-                'laravelVersion' => Application::VERSION,
-                'phpVersion' => PHP_VERSION,
-                'years' => Year::all(),
-                'movies' => $movies,
-                'user_name' => $user_name,
-                'user_id' => $user_id,
-                'home_route' => route('welcome'),
-                'user_route' => route('mypage', $user_id),
-            ]); 
-        }
+        return Inertia::render('backend/movie_edit', [
+            'canLogin' => Route::has('login'),
+            'canRegister' => Route::has('register'),
+            'laravelVersion' => Application::VERSION,
+            'phpVersion' => PHP_VERSION,
+            'years' => Year::all(),
+            'movies' => $movies,
+            'user_name' => $user_name,
+            'user_id' => $user_id,
+            'home_route' => route('welcome'),
+            'user_route' => route('mypage', $user_id),
+        ]);
     }
 
     public function store(Request $request) {
+        //dd($request);
 
         //画像ファイルを保存するディレクトリ名
         $dir = 'img';
@@ -130,6 +115,65 @@ class MovieController extends Controller
         //$image->実際に存在するテーブルの列名 = $file_name;
         //$image->実際に存在するテーブルの列名 = 'storage/app/public/' . $dir . '/' . $file_name;
         $post = Movie::create([
+            'movie_title' => $request->movie_title,
+            'about' => $request->movie_about,
+            'auther' => $request->auther,
+            'directer' => $request->directer,
+            'screenwriter' => $request->screenwriter,
+            'caracterdesign' => $request->characterdesign,
+            'music' => $request->music,
+            'cast' => $request->movie_cast,
+            'company' => $request->company,
+            'year_id' => $request->year_id,
+            'movie_img' => $filename,
+            'movie_img_path' => 'storage/image' . '/' . $filename,
+        ]);
+
+        return back();
+    }
+
+    public function edit(Movie $movie) {
+        $movies = Movie::where('id', $movie->id)->with('year')->get();
+
+        if(auth()->id()) {
+            $user_name = Auth::user()->name;
+            $user_id = Auth::user()->id;
+        }else{
+            $user_name = '';
+            $user_id = '';
+        }
+
+        return Inertia::render('backend/movie_edit', [
+            'canLogin' => Route::has('login'),
+            'canRegister' => Route::has('register'),
+            'laravelVersion' => Application::VERSION,
+            'phpVersion' => PHP_VERSION,
+            'years' => Year::all(),
+            'movies' => $movies,
+            'movie_id' => $movie->id,
+            'user_name' => $user_name,
+            'user_id' => $user_id,
+            'home_route' => route('welcome'),
+            'user_route' => route('mypage', $user_id),
+        ]); 
+    }
+
+    public function update(Request $request, Movie $movie) {
+        //dd($request);
+        //画像ファイルを保存するディレクトリ名
+        $dir = 'img';
+
+        // アップロードされたファイル名を取得
+        $filename = $request->file('movie_img')->getClientOriginalName();
+
+        //画像ファイルを保存するディレクトリはstorage/app/public/img/
+        $request->file('movie_img')->storeAs('image', $filename, 'public');
+
+
+        //データベースに追加
+        //$image->実際に存在するテーブルの列名 = $file_name;
+        //$image->実際に存在するテーブルの列名 = 'storage/app/public/' . $dir . '/' . $file_name;
+        $post = $movie->update([
             'movie_title' => $request->movie_title,
             'about' => $request->movie_about,
             'auther' => $request->auther,

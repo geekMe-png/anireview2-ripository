@@ -64,12 +64,20 @@ class ReviewController extends Controller
 
     public function create($movie_id) {
         $movies = Movie::where('id', $movie_id)->get();
-        if(User::where('id')) {
-            $users_id = Auth::user()->id;
-            $users_name = Auth::user()->name;
-        }else{
-            $users = User::wherenull('id');
-        }
+
+        $reviews = [0 => [
+            'score' => 3,
+            'review_title' => null,
+            'review_content' => null,
+            'original_id' => null,
+        ]]; 
+
+        //if(User::where('id')) {
+          //  $users_id = Auth::user()->id;
+           // $users_name = Auth::user()->name;
+        //}else{
+          //  $users = User::wherenull('id');
+        //}
 
         if(auth()->id()) {
             $user_name = Auth::user()->name;
@@ -86,8 +94,9 @@ class ReviewController extends Controller
             'phpVersion' => PHP_VERSION,
             'origins' => Origin::all(),
             'movies' => $movies,
-            'user_id' => $users_id,
-            'user_name' => $users_name,
+            'reviews' => $reviews,
+            'user_id' => $user_id,
+            'user_name' => $user_name,
             'movie_id' => $movie_id,
             'home_route' => route('welcome'),
             'user_route' => route('mypage', $user_id),
@@ -106,6 +115,48 @@ class ReviewController extends Controller
         ]);
 
         return back();
+    }
+
+    public function edit($movie_id, Review $review) {
+        $movies = Movie::where('id', $movie_id)->get();
+        $reviews = Review::where('id', $review->id)->with('user', 'movie', 'original')->get();
+
+        if(auth()->id()) {
+            $user_name = Auth::user()->name;
+            $user_id = Auth::user()->id;
+        }else{
+            $user_name = '';
+            $user_id = '';
+        }
+
+        return Inertia::render('backend/review_edit', [
+            'canLogin' => Route::has('login'),
+            'canRegister' => Route::has('register'),
+            'laravelVersion' => Application::VERSION,
+            'phpVersion' => PHP_VERSION,
+            'origins' => Origin::all(),
+            'movies' => $movies,
+            'reviews' => $reviews,
+            'review_id' => $review->id,
+            'user_id' => $user_id,
+            'user_name' => $user_name,
+            'movie_id' => $movie_id,
+            'home_route' => route('welcome'),
+            'user_route' => route('mypage', $user_id),
+        ]);
+    }
+
+    public function update($movie_id, Review $review, Request $request) {
+        $post = $review->update([
+            'original_id' => $request->original_id,
+            'score' => $request->score,
+            'review_title' => $request->review_title,
+            'review_content' => $request->review_content,
+            'movie_id' => $request->movie_id,
+            'user_id' => auth()->id(),
+        ]);
+
+        return redirect()->route('review', $review->id);
     }
 
     public function destroy(Review $review) {

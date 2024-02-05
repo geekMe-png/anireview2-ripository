@@ -58,7 +58,7 @@ const props = defineProps({
                 <p class=""> 性別：{{ user.gender.gender }} </p>
                 <p class=""> 投稿数：{{ reviews_count }} </p>
                 <Link :href="route('profile.edit')" class="relative bottom-6 md:top-1 hover:text-gray-800 float-right">プロフィール設定>></Link>
-                <Link :href="route('movie.create', { movie_id:0 })" v-if="auth === 1" class="relative bottom-7 right-3 md:top-0 text-white font-semibold bg-orange-500 border-2 border-orange-600 px-3 py-0 md:px-28 rounded-md hover:border-orange-200 float-right">作品を追加</Link>
+                <Link :href="route('movie.create')" v-if="auth === 1" class="relative bottom-7 right-3 md:top-0 text-white font-semibold bg-orange-500 border-2 border-orange-600 px-3 py-0 md:px-28 rounded-md hover:border-orange-200 float-right">作品を追加</Link>
             </div>
             <p class="relative py-3 my-8 text-3xl text-white font-bold text-center border-b border-black">レビュー一覧</p>
             <div v-for="review in reviews" class="flex px-3 py-6 border-b border-dashed border-gray-300">
@@ -77,7 +77,7 @@ const props = defineProps({
                         <p class="relative top-3">{{ review.score }}</p>
                     </div>
                     <div v-if="user_id === review.user_id" class="relative top-2 float-left">
-                        <Link :href="route('review.create', { movie_id:review.movie_id })" class="px-3 py-1 text-white bg-green-500 hover:bg-green-400 rounded-md">編集</Link>
+                        <Link :href="route('review.edit', {  movie_id:review.movie_id, review:review.id })" class="px-3 py-1 text-white bg-green-500 hover:bg-green-400 rounded-md">編集</Link>
                     </div>
                 </div>
             </div>

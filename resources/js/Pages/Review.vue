@@ -98,7 +98,7 @@ function submit () {
                         <p> {{ create_time }} </p>
                     </div>
                     <div v-if="user_id === review.user_id" class="flex space-x-3">
-                        <Link :href="route('review.create', { movie_id:review.movie_id })" class="px-6 py-2 text-white bg-green-500 hover:bg-green-400 rounded-md">編集</Link>
+                        <Link :href="route('review.edit', { movie_id:review.movie_id, review:review.id })" class="px-6 py-2 text-white bg-green-500 hover:bg-green-400 rounded-md">編集</Link>
                         <form @submit.prevent="submit" class="px-6 py-2 text-white bg-slate-600 hover:bg-slate-500 rounded-md">
                             <input type="submit" value="削除">
                         </form>

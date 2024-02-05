@@ -27,6 +27,9 @@ const props = defineProps({
     movies: {
         type: Array,
     },
+    movie_id: {
+        type: Number,
+    },
     user_name: {
       type: String,
     },
@@ -40,6 +43,8 @@ const props = defineProps({
       type: String,
     },
 });
+
+//console.log(props.movie_id);
 
 //console.log(props.years[0].year);
 //console.log(props.movies[0]);
@@ -55,11 +60,23 @@ const form = reactive({
     movie_cast: props.movies[0].cast,
     company: props.movies[0].company,
     year_id: props.movies[0].year_id,
-    movie_img: props.movies[0].movie_img,
+    movie_img: '',
 })
 
+console.log(form);
+
 const submit = () => {
-    Inertia.post(route('movie.store'), form)
+    if(props.movie_id == null) {
+        Inertia.post(route('movie.store'), form);
+        //confirm('0');
+    }else{
+        Inertia.post(route('movie.update', props.movie_id), form, {
+            forceFormData: true,
+        });
+        //console.log(form);
+        //console.log(form.movie_img);
+    }
+    //Inertia.post(route('movie.store'), form)
 }
 </script>
 
@@ -71,7 +88,7 @@ const submit = () => {
             <p>こちらは<span class="text-red-600">作品登録ページ</span>です</p>
         </HeaderLayout>
         <div class="mx-3">
-            <form @submit.prevent="submit" enctype="multipart/form-data">
+            <form @submit.prevent="submit" enctype="multipart/form-data" method="post">
                 <div class="p-3 text-center border-2 border-gray-300 rounded-md divide-y-2 divide-gray-400 divide-dashed space-y-11">
                     <div class="">
                         <label for="movie_title" class="relative text-2xl font-bold">作品タイトル</label><br>

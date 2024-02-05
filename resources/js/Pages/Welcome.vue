@@ -58,7 +58,7 @@ const slides = props.img_path;
           </HeaderLayout>
         </div>
         <section class="py-8 bg-stone-500">
-          <h1 class="py-2 mx-5 md:mx-80 text-2xl md:text-4xl text-black font-bold text-center border-y-4 border-stone-700">今期のアニメ</h1>
+          <h1 class="py-2 mx-5 md:mx-80 text-2xl md:text-4xl text-black font-bold text-center border-y-4 border-stone-700">おすすめのアニメ</h1>
           <carousel :items-to-show="5" :items-to-scroll="5" :autoplay="9000" :wrap-around="true" :pauseAutoplayOnHover="true" :transition="300" class="my-8">
             <slide v-for="slide in slides" :key="slide">
               <Link :href="route('movie', { movie:slide.id })">

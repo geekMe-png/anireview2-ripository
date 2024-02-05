@@ -28,6 +28,12 @@ const props = defineProps({
     movies: {
         type: Array,
     },
+    reviews: {
+        type: Array,
+    },
+    review_id: {
+        type: Number,
+    },
     user_id: {
         type: Number,
     },
@@ -45,7 +51,7 @@ const props = defineProps({
     },
 });
 
-const rating = ref(3);
+const rating = ref(props.reviews[0].score);
 
 function setRating(value) {
     rating.value = value;
@@ -56,15 +62,23 @@ function getRating(value) {
 };
 
 const form = reactive({
-    original_id: null,
+    original_id: props.reviews[0].original_id,
     score: rating,
-    review_title: null,
-    review_content: null,
+    review_title: props.reviews[0].review_title,
+    review_content: props.reviews[0].review_content,
     movie_id: props.movie_id,
 })
 
-function submit () {
-    router.post('review.store', form)
+const submit = () => {
+    if(props.review_id == null) {
+        router.post(route('review.store', { movie_id:props.movie_id }), form);
+        //confirm('0');
+    }else{
+        router.post(route('review.update', { movie_id:props.movie_id, review:props.review_id }), form);
+        //confirm('else');
+        //console.log(form);
+        //console.log(form.movie_img);
+    }
 }
 </script>
 
@@ -78,7 +92,7 @@ function submit () {
         <div class="mx-3 space-y-10">
             <div class="relative flex flex-wrap -mx-3 px-3 py-2 bg-gray-300">
                 <Link :href="route('movie', movie.id)">
-                    <img :src="'../' + movie.movie_img_path" alt="映せません" class="static w-28">
+                    <img :src="'../../' + movie.movie_img_path" alt="映せません" class="static w-28">
                 </Link>
                 <div class="relative left-4">
                     <p class="relative py-3 text-3xl font-bold text-gray-600">{{ movie.movie_title }}</p>

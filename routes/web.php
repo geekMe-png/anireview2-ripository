@@ -31,13 +31,21 @@ Route::get('/review-edit/{movie_id}', [ReviewController::class, 'create'])->name
 
 Route::post('/review-edit/{movie_id}', [ReviewController::class, 'store'])->name('review.store');
 
+Route::get('/review-edit/{movie_id}/{review}', [ReviewController::class, 'edit'])->name('review.edit');
+
+Route::post('/review-edit/{movie_id}/{review}', [ReviewController::class, 'update'])->name('review.update');
+
 Route::get('/movie/{movie}', [MovieController::class, 'index'])->name('movie');
 
 Route::delete('/movie/{movie}', [MovieController::class, 'destroy'])->name('movie.destroy');
 
-Route::get('/movie-edit/{movie_id}', [MovieController::class, 'create'])->name('movie.create');
+Route::get('/movie-edit', [MovieController::class, 'create'])->name('movie.create');
 
-Route::post('/movie-edit/{movie_id}', [MovieController::class, 'store'])->name('movie.store');
+Route::post('/movie-edit', [MovieController::class, 'store'])->name('movie.store');
+
+Route::get('/movie-edit/{movie}', [MovieController::class, 'edit'])->name('movie.edit');
+
+Route::post('/movie-edit/{movie}', [MovieController::class, 'update'])->name('movie.update');
 
 Route::get('/mypage/{user_id}', [MypageController::class, 'index'])->name('mypage');
 

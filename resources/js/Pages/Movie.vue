@@ -88,7 +88,7 @@ function submit () {
                             <Link :href="route('review.create', { movie_id:movie.id })" class="relative top-3 md:top-11 left-1 text-2xl text-white font-semibold bg-orange-500 border-2 border-orange-600 rounded-md px-16 py-0 md:py-2 md:px-64 hover:border-orange-200">レビューを書く</Link>
                         </div>
                         <div class="relative top-4 md:top-16 right-1 md:left-3 flex space-x-4">
-                            <Link :href="route('movie.create', { movie_id:movie.id })" v-if="auth === 1" class="relative left-2 text-white font-semibold bg-orange-500 border-2 border-orange-600 rounded-l-md px-6 py-5 md:px-28 hover:border-orange-200">作品を編集</Link>
+                            <Link :href="route('movie.edit', { movie:movie.id })" v-if="auth === 1" class="relative left-2 text-white font-semibold bg-orange-500 border-2 border-orange-600 rounded-l-md px-6 py-5 md:px-28 hover:border-orange-200">作品を編集</Link>
                             <form @submit.prevent="submit" v-if="auth === 1" class="relative right-2 text-white font-semibold bg-orange-500 border-2 border-orange-600 rounded-r-md px-6 py-5 md:px-28 hover:border-orange-200">
                                 <input type="submit" value="作品を削除">
                             </form>
