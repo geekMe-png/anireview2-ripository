@@ -34,7 +34,7 @@ Route::get('/search', [SearchController::class, 'index'])->name('search');
 //})->middleware(['auth', 'verified'])->name('dashboard');
 
 Route::middleware('auth')->group(function () {
-    Route::get('/review-edit/{movie_id}', [ReviewController::class, 'create'])->name('review.create');
+    Route::get('/review-edit/{movie_id}', [ReviewController::class, 'create'])->name('review.create')->middleware('hasReview');
 
     Route::post('/review-edit/{movie_id}', [ReviewController::class, 'store'])->name('review.store');
 

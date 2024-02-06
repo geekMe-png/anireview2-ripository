@@ -63,6 +63,9 @@ class ReviewController extends Controller
     }
 
     public function create($movie_id) {
+        //$type = gettype($movie_id);
+        //dd($type);
+
         $movies = Movie::where('id', $movie_id)->get();
 
         $reviews = [0 => [
