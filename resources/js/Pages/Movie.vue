@@ -64,6 +64,8 @@ function submit () {
         router.get(route('movie', props.movie_id));
     }
 }
+
+console.log(props.movies[0].movie_img_path);
 </script>
 
 <template>
@@ -76,7 +78,7 @@ function submit () {
             </HeaderLayout>
             <div class="mx-3 md:mx-10">
                 <div class="relative flex px-3 py-5 md:px-28 bg-gray-300 rounded-md opacity-80 shadow-xl">
-                    <img :src="'../' + movie.movie_img_path" alt="映せません" class="static w-32 h-50 md:w-44 md:h-64 flex">
+                    <img :src="movie.movie_img_path" alt="映せません" class="static w-32 h-50 md:w-44 md:h-64 flex">
                     <div class="relative bottom-1 left-6 md:bottom-0 md:left-16">
                         <p class="static text-3xl md:text-4xl text-gray-600 font-bold">{{ movie.movie_title }}</p>
                         <div class="relative flex items-center">

@@ -16,6 +16,10 @@ class MovieController extends Controller
     public function index(Movie $movie) {
         $movies = Movie::with('year')->where('id', $movie->id)->get();
 
+       // foreach($movies as $movie) {
+         //   dd($movie->movie_img);
+        //}
+
         $reviews = Review::with('original', 'user')->where('movie_id', $movie->id)->get();
 
         if($reviews->count() > 0) {
