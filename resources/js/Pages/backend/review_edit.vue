@@ -103,7 +103,7 @@ const submit = () => {
                         <p>制作会社：{{ movie.company }}</p>
                     </div>
                 </div>
-                <p class="relative md:top-[104px] md:left-6 my-1 font-mono text-gray-500">キャスト：<br>{{ movie.cast }}</p>
+                <p class="relative md:left-6 my-1 font-mono text-gray-500">キャスト：<br>{{ movie.cast }}</p>
             </div>
             <form @submit.prevent="submit" class="relative p-3 space-y-16">
                 <div class="relative p-3 -mx-6 text-center bg-gray-300 border-2">
