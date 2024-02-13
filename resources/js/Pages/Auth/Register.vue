@@ -12,9 +12,9 @@ const props = defineProps({
     }
 });
 
-const select_option = ref('男性');
+//const select_option = ref('男性');
 
-console.log(select_option.value);
+//console.log(select_option.value);
 
 const form = useForm({
     name: '',
